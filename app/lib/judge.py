@@ -66,6 +66,7 @@ def getJudge(url, psm, border):
                     a = 255
                 cropped_img[y][x] = [a, a, a]
 
+        cropped_img = cv2.blur(cropped_img, (3, 3))
         cropped_img = cv2.copyMakeBorder(cropped_img, 100, 100, 100, 100, cv2.BORDER_CONSTANT, value=[255,255,255])  
 
         result = tool.image_to_string(Image.fromarray(cropped_img), lang='eng', builder=builder)
