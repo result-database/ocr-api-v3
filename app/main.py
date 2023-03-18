@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from lib.score import getScore
 from lib.difficult import getDifficult
+from lib.title import getTitle
 
 app = FastAPI()
 
@@ -15,3 +16,7 @@ def score(url, psm):
 @app.get('/ocr/difficult')
 def difficult(url, psm):
     return getDifficult(url, psm)
+
+@app.get('/ocr/title')
+def title(url, psm, border):
+    return getTitle(url, psm, border)
