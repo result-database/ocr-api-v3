@@ -23,6 +23,17 @@ def bubble_sort(arr):
                 change = True
     return arr
 
+def sort_for_difficult(arr):
+    # ただのソート
+    change = True
+    while change:
+        change = False
+        for i in range(len(arr) - 1):
+            if arr[i]['credibility'] < arr[i + 1]['credibility']:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                change = True
+    return arr
+
 def get_distance(x1, y1, x2, y2):
     # 二点間の距離を三平方の定理で求める
     d = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
