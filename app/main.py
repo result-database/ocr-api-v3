@@ -6,6 +6,7 @@ from lib.title import getTitle
 from lib.judge import getJudge
 
 from lib.candidate import candidateDifficult
+from lib.candidate import candidateTitle
 
 app = FastAPI()
 
@@ -32,3 +33,7 @@ def judge(url, psm, border):
 @app.get('/candidate/difficult')
 def candidate_difficult(data):
     return {'candidate': candidateDifficult(data)}
+
+@app.get('/candidate/title')
+def candidate_title(data, ratio):
+    return {'candidate': candidateTitle(data, ratio)}
