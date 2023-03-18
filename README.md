@@ -2,6 +2,10 @@
 
 ## ToDo
 
+- ぼかしを検討
+  - difficult
+  - title
+  - score
 - similar-candidate
   - music-title
   - difficult
