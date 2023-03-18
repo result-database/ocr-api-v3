@@ -4,7 +4,6 @@
 
 - rewriting
   - title
-  - difficult
   - judge
 - similar-candidate
   - music-title
