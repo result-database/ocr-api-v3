@@ -17,6 +17,7 @@ module.exports = {
     'perf',
     'config',
     'package',
+    'todo'
   ],
 
   // コミットメッセージの最大文字数
@@ -96,5 +97,10 @@ module.exports = {
       emoji: '📦',
       value: 'package',
     },
+    todo: {
+      description: 'タスクの追加・更新・削除',
+      emoji: '✔️',
+      value: 'todo'
+    }
   },
 };
