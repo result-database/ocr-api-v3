@@ -6,8 +6,6 @@
   - difficult
   - title
   - score
-- similar-candidate
-  - music-title
 
 ## Parameter
 
