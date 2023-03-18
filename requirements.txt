@@ -3,3 +3,4 @@ uvicorn
 pyocr
 numpy
 requests
+opencv-python
