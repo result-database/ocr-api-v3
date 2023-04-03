@@ -13,11 +13,14 @@ RUN apt-get update
 RUN apt-get install -y python3.9
 RUN apt-get install -y python3-pip
 RUN apt-get -y install tesseract-ocr tesseract-ocr-jpn libtesseract-dev libleptonica-dev tesseract-ocr-script-jpan libgl1-mesa-dev
+RUN apt update
+RUN apt install -y python3-dev libpq-dev
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir --upgrade -r /app/requirements.txt
+
+RUN python3 -m pip install -r /app/requirements.txt --no-cache-dir
 
 COPY app/ /app
 

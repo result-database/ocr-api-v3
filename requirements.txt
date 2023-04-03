@@ -1,6 +1,9 @@
+wheel
 fastapi
 uvicorn
 pyocr
 numpy
 requests
 opencv-python
+psycopg2
+sqlalchemy
