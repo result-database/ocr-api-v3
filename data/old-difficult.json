@@ -11888,38 +11888,6 @@
     "totalNoteCount": 249
   },
   {
-    "id": 1687,
-    "musicId": 338,
-    "musicDifficulty": "normal",
-    "playLevel": 11,
-    "releaseConditionId": 1,
-    "totalNoteCount": 344
-  },
-  {
-    "id": 1688,
-    "musicId": 338,
-    "musicDifficulty": "hard",
-    "playLevel": 16,
-    "releaseConditionId": 1,
-    "totalNoteCount": 452
-  },
-  {
-    "id": 1689,
-    "musicId": 338,
-    "musicDifficulty": "expert",
-    "playLevel": 21,
-    "releaseConditionId": 1,
-    "totalNoteCount": 594
-  },
-  {
-    "id": 1690,
-    "musicId": 338,
-    "musicDifficulty": "masutaaaaaaa",
-    "playLevel": 26,
-    "releaseConditionId": 40338,
-    "totalNoteCount": 735
-  },
-  {
     "id": 1711,
     "musicId": 343,
     "musicDifficulty": "easy",
