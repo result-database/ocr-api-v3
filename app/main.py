@@ -27,6 +27,16 @@ def get_db():
 def index(name:str, db: Session = Depends(get_db)):
     return query.create_item(db=db, name=name)
 
+import update
+@app.get('/update')
+def update_route(db: Session = Depends(get_db)):
+    return update.update(db=db)
+
+import set_data
+@app.get('/set')
+def set_route(db: Session = Depends(get_db)):
+    return set_data.set_data(db=db)
+
 @app.get('/ocr/score')
 def score(url, psm):
     return getScore(url, psm)

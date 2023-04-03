@@ -1,0 +1,1 @@
+比較の流れ(特にmusicとdifficultのリレーション)
