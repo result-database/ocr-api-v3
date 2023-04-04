@@ -19,7 +19,20 @@ class Music(Base):
     lyricist = Column(String(255), nullable=False, unique=False)
     composer = Column(String(255), nullable=False, unique=False)
     arranger = Column(String(255), nullable=False, unique=False)
+    hash = Column(String(255), unique=False)
     difficulties = relationship("Difficult", back_populates="music")
+
+    def toDict(self):
+        return {
+            'id': self.id,
+            "title": self.title,
+            "pronunciation": self.pronunciation,
+            "creator": self.creator,
+            "lyricist": self.lyricist,
+            "composer": self.composer,
+            "arranger": self.arranger,
+            "hash": self.hash
+        }
 
 class Difficult(Base):
     __tablename__ = 'difficulties'
