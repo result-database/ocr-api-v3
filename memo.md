@@ -1,4 +1,6 @@
-# 比較の流れ(特にmusicとdifficultのリレーション)
+# てきとーメモ
+
+## 比較の流れ(特にmusicとdifficultのリレーション)
 
 musicとdifficultは一対多
 
@@ -18,9 +20,9 @@ musicとdifficultは一対多
     - difficult自体の変化を確認
     - (difficultのIdをkeyとするリストでcheck-sumを比較)
 
-# テストデータのメモ
+## テストデータのメモ
 
-## `music.json` → `db`
+### `music.json` → `db`
 
 - id1(`Tell Your World`)の読み
   - `てるゆあわーるど` → `てるゆあわーるどっどどどどど`
