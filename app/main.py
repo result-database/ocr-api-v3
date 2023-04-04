@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from fastapi.staticfiles import StaticFiles
 
 from lib.score import getScore
 from lib.difficult import getDifficult
@@ -12,9 +13,15 @@ import models, query
 from db import SessionLocal, engine
 from sqlalchemy.orm import Session
 
+import requests
+import json
+
+from lib.sha256 import sha256
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def get_db():
     db = SessionLocal()
@@ -24,18 +31,43 @@ def get_db():
         db.close()
 
 @app.get('/')
-def index(name:str, db: Session = Depends(get_db)):
-    return query.create_item(db=db, name=name)
+def index(name:str):
+    return {"message": "Hello,{}!".format(name)}
 
-import update
-@app.get('/update')
-def update_route(db: Session = Depends(get_db)):
-    return update.update(db=db)
+@app.get("/music")
+def get_music(db: Session = Depends(get_db)):
+    music_json = requests.get('http://localhost:8080/static/data/new-music.json')
+    data = {}
+    for i in json.loads(music_json.text):
+        i.pop("seq")
+        i.pop("releaseConditionId")
+        i.pop("categories")
+        i.pop("dancerCount")
+        i.pop("selfDancerPosition")
+        i.pop("assetbundleName")
+        i.pop("liveTalkBackgroundAssetbundleName")
+        i.pop("publishedAt")
+        i.pop("liveStageId")
+        i.pop("fillerSec")
+        data[i["id"]] = sha256(i)
+    print("ids: " + str(list(data.keys())))
+    return data
 
-import set_data
-@app.get('/set')
-def set_route(db: Session = Depends(get_db)):
-    return set_data.set_data(db=db)
+@app.get("/difficult")
+def get_difficult():
+    difficult_json = requests.get('http://localhost:8080/static/data/new-difficult.json')
+    musicIds = []
+    data = {}
+    for i in json.loads(difficult_json.text):
+        musicIds.append(i["musicId"])
+
+    for musicId in list(set(musicIds)):
+        data[musicId] = []
+    for i in json.loads(difficult_json.text):
+        i.pop("releaseConditionId")
+        data[i["musicId"]].append(sha256(i))
+
+    return data
 
 @app.get('/ocr/score')
 def score(url, psm):
