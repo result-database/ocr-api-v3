@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "seq": 1100101,
+    "releaseConditionId": 1,
+    "categories": [
+      "mv"
+    ],
+    "title": "Tell Your World",
+    "pronunciation": "てるゆあわーるどっどどどどど",
+    "creator": "livetune",
+    "lyricist": "kz",
+    "composer": "kz",
+    "arranger": "kz",
+    "dancerCount": 1,
+    "selfDancerPosition": 0,
+    "assetbundleName": "jacket_s_001",
+    "liveTalkBackgroundAssetbundleName": "bg_livetalk_default_002",
+    "publishedAt": 1560148031000,
+    "liveStageId": 1,
+    "fillerSec": 9.0
+  },
+  {
+    "id": 3,
+    "seq": 1200102,
+    "releaseConditionId": 5,
+    "categories": [
+      "mv"
+    ],
+    "title": "テオ",
+    "pronunciation": "てお",
+    "creator": "Omoi",
+    "lyricist": "Sakurai",
+    "composer": "Omoi",
+    "arranger": "Omoi",
+    "dancerCount": 5,
+    "selfDancerPosition": 0,
+    "assetbundleName": "jacket_s_003",
+    "liveTalkBackgroundAssetbundleName": "bg_livetalk_default_002",
+    "publishedAt": 1560148031000,
+    "liveStageId": 1,
+    "fillerSec": 9.0
+  },
+  {
+    "id": 6,
+    "seq": 1200103,
+    "releaseConditionId": 5,
+    "categories": [
+      "mv_2d"
+    ],
+    "title": "ヒバナ -Reloaded-",
+    "pronunciation": "ひばなりろーでっど",
+    "creator": "DECO*27",
+    "lyricist": "DECO*27",
+    "composer": "DECO*27",
+    "arranger": "Rockwell",
+    "dancerCount": 3,
+    "selfDancerPosition": 0,
+    "assetbundleName": "jacket_s_006",
+    "liveTalkBackgroundAssetbundleName": "bg_livetalk_default_002",
+    "publishedAt": 1560148031000,
+    "liveStageId": 1,
+    "fillerSec": 9.0
+  }
+]

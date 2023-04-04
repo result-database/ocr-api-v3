@@ -17,3 +17,14 @@ musicとdifficultは一対多
     - (difficultの増減を確認したときのアレのvalueのリスト)
     - difficult自体の変化を確認
     - (difficultのIdをkeyとするリストでcheck-sumを比較)
+
+# テストデータのメモ
+
+## `music.json` → `db`
+
+- id1(`Tell Your World`)の読み
+  - `てるゆあわーるど` → `てるゆあわーるどっどどどどど`
+- id2
+  - `ロキ`が削除
+- id6
+  - `ヒバナ -Reloaded-`が追加

@@ -34,40 +34,40 @@ def get_db():
 def index(name:str):
     return {"message": "Hello,{}!".format(name)}
 
+def has_duplicates(seq):
+    return len(seq) != len(set(seq))
+
 @app.get("/music")
 def get_music(db: Session = Depends(get_db)):
-    music_json = requests.get('http://localhost:8080/static/data/new-music.json')
+
+    # httpから取得
+    music_json = requests.get('http://localhost:8080/static/data/music.json')
+
+    # データの整形
+    ids = []
     data = {}
+    use_items = ['id', 'title', 'pronunciation', 'creator', 'lyricist', 'composer', 'arranger']
     for i in json.loads(music_json.text):
-        i.pop("seq")
-        i.pop("releaseConditionId")
-        i.pop("categories")
-        i.pop("dancerCount")
-        i.pop("selfDancerPosition")
-        i.pop("assetbundleName")
-        i.pop("liveTalkBackgroundAssetbundleName")
-        i.pop("publishedAt")
-        i.pop("liveStageId")
-        i.pop("fillerSec")
-        data[i["id"]] = sha256(i)
-    print("ids: " + str(list(data.keys())))
-    return data
+        target = ''
+        data[i['id']] = {}
+        for item in use_items:
+            target += str(i[item])
+            data[i['id']][item] = i[item]
+        ids.append(i['id'])
+        data[i['id']]['hash'] = sha256(target)
 
-@app.get("/difficult")
-def get_difficult():
-    difficult_json = requests.get('http://localhost:8080/static/data/new-difficult.json')
-    musicIds = []
-    data = {}
-    for i in json.loads(difficult_json.text):
-        musicIds.append(i["musicId"])
+    # idの重複がないかバリデーション
+    if has_duplicates(ids):
+        return { 'ok':False }
 
-    for musicId in list(set(musicIds)):
-        data[musicId] = []
-    for i in json.loads(difficult_json.text):
-        i.pop("releaseConditionId")
-        data[i["musicId"]].append(sha256(i))
+    # DBから取得
+    music_db = db.query(models.Music).all()
 
-    return data
+    # データの整形
+    data2 = {}
+    for i in music_db:
+        data2[i.id] = i.toDict()
+    return data2
 
 @app.get('/ocr/score')
 def score(url, psm):
