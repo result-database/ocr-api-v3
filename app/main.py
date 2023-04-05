@@ -37,6 +37,8 @@ def index(name:str):
 def has_duplicates(seq):
     return len(seq) != len(set(seq))
 
+# 全消ししてからdifficultとmusicの旧をDBに突っ込むrouting
+
 @app.get("/music")
 def get_music(db: Session = Depends(get_db)):
 
