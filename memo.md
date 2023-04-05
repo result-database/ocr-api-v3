@@ -9,10 +9,10 @@ musicとdifficultは一対多
 
 - [x] そもそもmusicが増えてたり減ってたりするかを確認
 - [x] (idのリストを比較する)
-- for music
-- (共通のidのリストをfor)
-  - music自体の変化を確認
-  - (check-sumのhashを確認)
+- [x] for music
+- [x] (共通のidのリストをfor)
+  - [x] music自体の変化を確認
+  - [x] (check-sumのhashを確認)
   - musicに紐づくdifficultの増減を確認
   - (musicIdをkeyとするアレが必須)
     - for difficult

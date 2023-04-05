@@ -69,12 +69,21 @@ def get_music(db: Session = Depends(get_db)):
         data2[i.id] = i.toDict()
     
     # idの差分をとる
-    return {
+    diff = {
         "deleted": data2.keys() - data.keys(),
         "added": data.keys() - data2.keys(),
-        "not changed": data.keys() & data2.keys(),
-        "all": data.keys() | data2.keys()
+        "same": data.keys() & data2.keys(),
+        "updated": []
     }
+    
+    # hashを確認
+    for i in diff['same'].copy():
+        if data[i]['hash'] != data2[i]['hash']:
+            diff['updated'].append(i)
+            diff['same'].remove(i)
+    
+    return diff
+
 
 @app.get('/ocr/score')
 def score(url, psm):
