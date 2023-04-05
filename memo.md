@@ -1,26 +1,9 @@
 # てきとーメモ
 
-## 比較の流れ(特にmusicとdifficultのリレーション)
+## めんどくさいので、musicにdifficultを押し込む(カラムを極限まで増やす)
 
-musicとdifficultは一対多
-
-- [x] difficultのテストデータを作成
-
-- [x] Idの重複がないかバリデーション
-- [x] sha256で順番が変わってしまわないか？
-
-- [x] そもそもmusicが増えてたり減ってたりするかを確認
-- [x] (idのリストを比較する)
-- [x] for music
-- [x] (共通のidのリストをfor)
-  - [x] music自体の変化を確認
-  - [x] (check-sumのhashを確認)
-  - musicに紐づくdifficultの増減を確認
-  - (musicIdをkeyとするアレが必須)
-    - for difficult
-    - (difficultの増減を確認したときのアレのvalueのリスト)
-    - difficult自体の変化を確認
-    - (difficultのIdをkeyとするリストでcheck-sumを比較)
+- [ ] カラムの設計
+- [ ] テストデータの変更
 
 ## テストデータのメモ
 
