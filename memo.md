@@ -4,7 +4,7 @@
 
 musicとdifficultは一対多
 
-- [ ] difficultのテストデータを作成
+- [x] difficultのテストデータを作成
 
 - [x] Idの重複がないかバリデーション
 - [x] sha256で順番が変わってしまわないか？
