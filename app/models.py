@@ -41,4 +41,5 @@ class Difficult(Base):
     musicDifficulty = Column(String(255), nullable=False, unique=False)
     playLevel = Column(Integer, nullable=False, unique=False)
     totalNoteCount = Column(Integer, nullable=False, unique=False)
+    hash = Column(String(255), unique=False)
     music = relationship('Music', back_populates='difficulties')
