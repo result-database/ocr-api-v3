@@ -6,8 +6,7 @@
     "creator": "livetune",
     "lyricist": "kz",
     "composer": "kz",
-    "arranger": "kz",
-    "hash": "bb452bfd1ac4254b73d12fd7579a030932b2c9b7c9a146f671c57160f13f1345"
+    "arranger": "kz"
   },
   {
     "id": 2,
@@ -16,8 +15,7 @@
     "creator": "みきとP",
     "lyricist": "みきとP",
     "composer": "みきとP",
-    "arranger": "みきとP",
-    "hash": "1639054c665752e112faaa60921dd7edaa31c67bde9008ebc9ed66d08faf5f8f"
+    "arranger": "みきとP"
   },
   {
     "id": 3,
@@ -26,7 +24,6 @@
     "creator": "Omoi",
     "lyricist": "Sakurai",
     "composer": "Omoi",
-    "arranger": "Omoi",
-    "hash": "e6c549c082c1adcb5d1f34b2f0cfd7e15d492e281855965d7d6dd064b6dc81cd"
+    "arranger": "Omoi"
   }
 ]
