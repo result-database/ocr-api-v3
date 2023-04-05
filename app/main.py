@@ -67,7 +67,14 @@ def get_music(db: Session = Depends(get_db)):
     data2 = {}
     for i in music_db:
         data2[i.id] = i.toDict()
-    return data2
+    
+    # idの差分をとる
+    return {
+        "deleted": data2.keys() - data.keys(),
+        "added": data.keys() - data2.keys(),
+        "not changed": data.keys() & data2.keys(),
+        "all": data.keys() | data2.keys()
+    }
 
 @app.get('/ocr/score')
 def score(url, psm):
