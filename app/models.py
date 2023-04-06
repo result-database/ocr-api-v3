@@ -2,14 +2,6 @@ from db import Base
 from sqlalchemy import String, Boolean, Integer, Column,Text, ForeignKey
 from sqlalchemy.orm import relationship
 
-class Item(Base):
-    __tablename__ = 'items'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False, unique=True)
-
-    def __repr__(self):
-        return f'<Item name={self.name}>'
-
 class Music(Base):
     __tablename__ = 'musics'
     id = Column(Integer, primary_key=True, autoincrement=False)
@@ -19,8 +11,20 @@ class Music(Base):
     lyricist = Column(String(255), nullable=False, unique=False)
     composer = Column(String(255), nullable=False, unique=False)
     arranger = Column(String(255), nullable=False, unique=False)
+
+    level_easy = Column(Integer, nullable=False, unique=False)
+    level_normal = Column(Integer, nullable=False, unique=False)
+    level_hard = Column(Integer, nullable=False, unique=False)
+    level_expert = Column(Integer, nullable=False, unique=False)
+    level_master = Column(Integer, nullable=False, unique=False)
+
+    totalNote_easy = Column(Integer, nullable=False, unique=False)
+    totalNote_normal = Column(Integer, nullable=False, unique=False)
+    totalNote_hard = Column(Integer, nullable=False, unique=False)
+    totalNote_expert = Column(Integer, nullable=False, unique=False)
+    totalNote_master = Column(Integer, nullable=False, unique=False)
+
     hash = Column(String(255), unique=False)
-    difficulties = relationship("Difficult", back_populates="music")
 
     def toDict(self):
         return {
@@ -31,15 +35,15 @@ class Music(Base):
             "lyricist": self.lyricist,
             "composer": self.composer,
             "arranger": self.arranger,
+            "level_easy": self.level_easy,
+            "level_normal": self.level_normal,
+            "level_hard": self.level_hard,
+            "level_expert": self.level_expert,
+            "level_master": self.level_master,
+            "totalNote_easy": self.totalNote_easy,
+            "totalNote_normal": self.totalNote_normal,
+            "totalNote_hard": self.totalNote_hard,
+            "totalNote_expert": self.totalNote_expert,
+            "totalNote_master": self.totalNote_master,
             "hash": self.hash
         }
-
-class Difficult(Base):
-    __tablename__ = 'difficulties'
-    id = Column(Integer, primary_key=True, autoincrement=False)
-    musicId = Column(Integer, ForeignKey('musics.id'), nullable=False)
-    musicDifficulty = Column(String(255), nullable=False, unique=False)
-    playLevel = Column(Integer, nullable=False, unique=False)
-    totalNoteCount = Column(Integer, nullable=False, unique=False)
-    hash = Column(String(255), unique=False)
-    music = relationship('Music', back_populates='difficulties')
