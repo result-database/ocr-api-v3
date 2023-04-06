@@ -12,17 +12,17 @@ class Music(Base):
     composer = Column(String(255), nullable=False, unique=False)
     arranger = Column(String(255), nullable=False, unique=False)
 
-    level_easy = Column(Integer, nullable=False, unique=False)
-    level_normal = Column(Integer, nullable=False, unique=False)
-    level_hard = Column(Integer, nullable=False, unique=False)
-    level_expert = Column(Integer, nullable=False, unique=False)
-    level_master = Column(Integer, nullable=False, unique=False)
+    level_easy = Column(Integer, nullable=True, unique=False)
+    level_normal = Column(Integer, nullable=True, unique=False)
+    level_hard = Column(Integer, nullable=True, unique=False)
+    level_expert = Column(Integer, nullable=True, unique=False)
+    level_master = Column(Integer, nullable=True, unique=False)
 
-    totalNote_easy = Column(Integer, nullable=False, unique=False)
-    totalNote_normal = Column(Integer, nullable=False, unique=False)
-    totalNote_hard = Column(Integer, nullable=False, unique=False)
-    totalNote_expert = Column(Integer, nullable=False, unique=False)
-    totalNote_master = Column(Integer, nullable=False, unique=False)
+    totalNote_easy = Column(Integer, nullable=True, unique=False)
+    totalNote_normal = Column(Integer, nullable=True, unique=False)
+    totalNote_hard = Column(Integer, nullable=True, unique=False)
+    totalNote_expert = Column(Integer, nullable=True, unique=False)
+    totalNote_master = Column(Integer, nullable=True, unique=False)
 
     hash = Column(String(255), unique=False)
 
