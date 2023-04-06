@@ -9,6 +9,8 @@ from lib.judge import getJudge
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
+from lib.validate import load_diff
+
 import models
 from db import SessionLocal, engine
 from sqlalchemy.orm import Session
@@ -36,9 +38,6 @@ def get_db():
 def index(name:str):
     return {"message": "Hello,{}!".format(name)}
 
-def has_duplicates(seq):
-    return len(seq) != len(set(seq))
-
 # 全消ししてからdifficultとmusicの旧をDBに突っ込むrouting
 @app.get('/set_test')
 def set_test_data(db: Session = Depends(get_db)):
@@ -48,40 +47,15 @@ def set_test_data(db: Session = Depends(get_db)):
 @app.get("/load_diff")
 def get_music(db: Session = Depends(get_db)):
     # httpから取得
-    music_json = requests.get('http://localhost:8080/static/data/music.json')
-    difficult_json = requests.get('http://localhost:8080/static/data/difficult.json')
+    music = json.loads(requests.get('http://localhost:8080/static/data/music.json').text)
+    difficult = json.loads(requests.get('http://localhost:8080/static/data/difficult.json').text)
 
-    # バリデーション
-    musicIds = list(set([j['id'] for j in json.loads(music_json.text)]))
-    valid_difficulties = {'easy', 'normal', 'hard', 'expert', 'master'}
-  
-    # musicIdにリストmusicIdsに入っていないidがある場合をチェック
-    ids = set(item['musicId'] for item in json.loads(difficult_json.text))
-    invalid_ids = ids - set(musicIds)
-    if invalid_ids:
-        print(invalid_ids)
-        return { 'ok':False }
-
-    # musicIdとmusicDifficultyの重複をチェック
-    music_data = [(item['musicId'], item['musicDifficulty']) for item in json.loads(difficult_json.text)]
-    duplicates = [x for n, x in enumerate(music_data) if x in music_data[:n]]
-    if duplicates:
-        print('1')
-        return { 'ok':False }
-
-    # musicDifficultyの値のバリデーションをチェック
-    invalid_difficulties = set(item['musicDifficulty'] for item in json.loads(difficult_json.text)) - valid_difficulties
-    if invalid_difficulties:
-        print('2')
-        return { 'ok':False }
-    
-    # idの重複がないかバリデーション
-    if has_duplicates([j['id'] for j in json.loads(music_json.text)]):
-        return { 'ok':False }
+    if load_diff(music=music, difficult=difficult):
+        return {'ok': False}
 
     # データの結合
     result = []
-    for m in json.loads(music_json.text):
+    for m in music:
         tmp = {
             "id": m["id"],
             "title": m["title"],
@@ -91,7 +65,7 @@ def get_music(db: Session = Depends(get_db)):
             "composer": m["composer"],
             "arranger": m["arranger"]
         }
-        for d in json.loads(difficult_json.text):
+        for d in difficult:
             if d["musicId"] == m["id"]:
                 tmp["level_" + d["musicDifficulty"]] = d["playLevel"]
                 tmp["totalNote_" + d["musicDifficulty"]] = d["totalNoteCount"]
