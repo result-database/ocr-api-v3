@@ -9,7 +9,7 @@ from lib.judge import getJudge
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
-import models, query
+import models
 from db import SessionLocal, engine
 from sqlalchemy.orm import Session
 
