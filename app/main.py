@@ -148,6 +148,9 @@ def get_music(db: Session = Depends(get_db)):
 
     return diff2
 
+@app.get('/apply_diff')
+def apply_diff(url):
+    return {'ok':True}
 
 @app.get('/ocr/score')
 def score(url, psm):
