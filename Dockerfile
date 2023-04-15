@@ -5,10 +5,10 @@ WORKDIR /app
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:deadsnakes/ppa
-RUN add-apt-repository -y ppa:alex-p/tesseract-ocr5
+RUN apt-get update && apt-get install -y curl gnupg
+RUN echo "deb https://ppa.launchpadcontent.net/alex-p/tesseract-ocr5/ubuntu jammy main" >> /etc/apt/sources.list \
+    && echo "deb-src https://ppa.launchpadcontent.net/alex-p/tesseract-ocr5/ubuntu jammy main" >> /etc/apt/sources.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8529B1E0F8BF7F65C12FABB0A4BCBD87CEF9E52D
 RUN apt-get update
 RUN apt-get install -y python3.9
 RUN apt-get install -y python3-pip
