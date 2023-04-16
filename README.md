@@ -6,7 +6,6 @@
   - difficult
   - title
   - score
-- すべてのgrayscaleをnumpyに書き換えてもらう
 - psmとborderの初期値を受け取るようにする
 - psmとborderのバリデーションをきれいにする
 
