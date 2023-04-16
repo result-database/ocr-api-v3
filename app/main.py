@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from lib.score import getScore
@@ -9,31 +9,27 @@ from lib.judge import getJudge
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
-import requests
-import json
+from concurrent.futures import ProcessPoolExecutor
+import asyncio
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get('/')
-def index(name:str):
-    return {"message": "Hello,{}!".format(name)}
+@app.get('/ocr/v1')
+async def ocr(url):
+    def process_ocr_with_processes(url):
+        with ProcessPoolExecutor() as executor:
+            score = executor.submit(getScore, url, 'a')
+            difficult = executor.submit(getDifficult, url, 'a')
+            title = executor.submit(getTitle, url, 'a', 'a')
+            judge = executor.submit(getJudge, url, 'a', 'a')
 
-@app.get('/ocr/score')
-def score(url, psm):
-    return getScore(url, psm)
+        return {'score': score.result(), 'difficult': difficult.result(), 'title': title.result(), 'judge':judge.result()}
 
-@app.get('/ocr/difficult') 
-def difficult(url, psm):
-    return getDifficult(url, psm)
-
-@app.get('/ocr/title')
-def title(url, psm, border):
-    return getTitle(url, psm, border)
-
-@app.get('/ocr/judge')
-def judge(url, psm, border):
-    return getJudge(url, psm, border)
+    # 並列処理でOCRを実行して結果を返す
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(None, process_ocr_with_processes, url)
+    return result
 
 @app.get('/candidate/difficult')
 def candidate_difficult(data):
