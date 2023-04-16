@@ -56,15 +56,11 @@ def getJudge(url, psm, border):
     for i in range(len(judges)):
         cropped_img = img[hight * i : hight * (i + 1), 0 : img.shape[1]]
 
-        for y in range(cropped_img.shape[0]):
-            for x in range(cropped_img.shape[1]):
-                r, g, b = cropped_img[y][x]
-
-                if r >= border and g >= border and b >= border:
-                    a = 0
-                else:
-                    a = 255
-                cropped_img[y][x] = [a, a, a]
+        # convert to grayscale
+        r, g, b = cropped_img[:, :, 0], cropped_img[:, :, 1], cropped_img[:, :, 2]
+        mask = np.logical_and(r >= border, np.logical_and(g >= border, b >= border))
+        cropped_img[mask] = [0, 0, 2505]
+        cropped_img[np.logical_not(mask)] = [255, 255, 255]
 
         cropped_img = cv2.blur(cropped_img, (3, 3))
         cropped_img = cv2.copyMakeBorder(cropped_img, 100, 100, 100, 100, cv2.BORDER_CONSTANT, value=[255,255,255])  
