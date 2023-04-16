@@ -1,4 +1,3 @@
-from lib.util import openImg
 from lib.util import get_point
 from PIL import Image
 import numpy as np
@@ -16,27 +15,11 @@ search_content = cv2.cvtColor(cv2.imread('./lib/template.png'), cv2.COLOR_BGR2RG
 def getJudge(img, psm, border):
     # timer start
     start = time.time()
-    
-    # # validate border
-    # # arrow number (else, using 230)
-    # if border.isdecimal():
-    #     border = int(border)
-    # else:
-    #     border = 230
-
-    # # validate psm-args
-    # # arrow '6' or '7' (else, using 6)
-    # if psm == "6" or psm == "7":
-    #     # using psm from args as int(number)
-    #     psm = int(psm)
-    # else:
-    #     psm = 6
 
     # generaet builder
     builder = pyocr.builders.DigitBuilder(tesseract_layout=psm)
 
-    # # read image from url(http) as numpy-array(RGB)
-    # search_target = openImg(url)
+    # read image from props as numpy-array(RGB)
     search_target = img
 
     # judgeの座標を取得

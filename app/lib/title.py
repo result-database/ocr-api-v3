@@ -1,4 +1,3 @@
-from lib.util import openImg
 from PIL import Image
 import numpy as np
 import pyocr
@@ -10,18 +9,8 @@ tools = pyocr.get_available_tools()
 tool = tools[0]
 
 def getTitle(img, psm, border):
-    # # validate border
-    # # arrow number (else, using 215)
-    # if border.isdecimal():
-    #     border = int(border)
-    # else:
-    #     border = 215
-
     # timer start
     start = time.time()
-
-    # # read image from url(http) as numpy-array(RGB)
-    # img = openImg(url)
 
     # crop img
     # left:0 top:0 right:1/2 bottom:6/7
@@ -53,14 +42,6 @@ def getTitle(img, psm, border):
     mask = np.logical_and(r == 255, np.logical_and(g == 255, b == 255))
     img[mask] = [0, 0, 0]
     img[np.logical_not(mask)] = [255, 255, 255]
-
-    # # validate psm-args
-    # # arrow '6' or '7' or '11' (else, using 11)
-    # if psm == "6" or psm == "7" or psm == '11':
-    #     # using psm from args as int(number)
-    #     psm = int(psm)
-    # else:
-    #     psm = 11
 
     # generate builder
     builder = pyocr.builders.TextBuilder(tesseract_layout=psm)
