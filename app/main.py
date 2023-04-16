@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import StreamingResponse
+from PIL import Image
+import numpy as np
+import io
 
 from lib.score import getScore
 from lib.difficult import getDifficult
@@ -38,3 +42,22 @@ def candidate_difficult(data):
 @app.get('/candidate/title')
 def candidate_title(data, ratio):
     return {'candidate': candidateTitle(data, ratio)}
+
+@app.get('/ocr/title')
+def title(url, psm, border):
+    img = getTitle(url, psm, border)
+
+    # NumPy 配列を Pillow の Image オブジェクトに変換する
+    img_pil = Image.fromarray(img)
+    img_pil = img_pil.convert("RGB")
+
+    # Pillow の Image オブジェクトをバイナリストリームに変換する
+    img_byteio = io.BytesIO()
+    img_pil.save(img_byteio, format="JPEG")
+    img_byteio.seek(0)
+
+    # ストリーミングレスポンスを生成して画像を返す
+    return StreamingResponse(
+        content=img_byteio,
+        media_type="image/jpeg"
+    )

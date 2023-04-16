@@ -32,7 +32,7 @@ def getTitle(url, psm, border):
     start = time.time()
 
     # to grayscale
-    img2 = Image.new('RGBA', (img.shape[1], img.shape[0]))
+    img2 = Image.new('RGB', (img.shape[1], img.shape[0]))
     for y in range(img.shape[0]):
         for x in range(img.shape[1]):
             r, g, b = img[y][x]
@@ -42,7 +42,7 @@ def getTitle(url, psm, border):
             else:
                 color = 0
 
-            img2.putpixel((x, y), (color, color, color, 255))
+            img2.putpixel((x, y), (color, color, color))
 
 
     # get time of do-grayscale
@@ -56,7 +56,18 @@ def getTitle(url, psm, border):
     ))
 
     # create margin
-    img = cv2.copyMakeBorder(img, 50, 50, 50, 50, cv2.BORDER_CONSTANT, value=[255,255,255])  
+    img = cv2.copyMakeBorder(img, 50, 50, 50, 50, cv2.BORDER_CONSTANT, value=[0,0,0])  
+
+    print(img.shape)
+
+    r = img[:, :, 0]
+    g = img[:, :, 1]
+    b = img[:, :, 2]
+    mask = np.logical_and(r == 255, np.logical_and(g == 255, b == 255))
+
+    # 一括で更新
+    img[mask] = [0, 0, 0]
+    img[np.logical_not(mask)] = [255, 255, 255]
 
     # validate psm-args
     # arrow '6' or '7' or '11' (else, using 11)
@@ -90,5 +101,7 @@ def getTitle(url, psm, border):
         },
         "result": result,
     }
+
+    print(result)
 
     return res
