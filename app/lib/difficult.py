@@ -25,24 +25,25 @@ def getDifficult(url, psm):
     start = time.time()
 
     # to grayscale
-    for y in range(img.shape[0]):
-        for x in range(img.shape[1]):
-            r, g, b = img[y][x]
+    # ループを使わずに条件式を計算して処理を高速化
+    r = img[:, :, 0]
+    g = img[:, :, 1]
+    b = img[:, :, 2]
 
-            if 94 < r < 175 and 179 < g < 255 and 28 < b < 108:
-                color = 0
-            elif 54 < r < 134 and 144 < g < 224 and 192 < b < 255:
-                color = 0
-            elif 204 < r < 255 and 135 < g < 215 and 21 < b < 101:
-                color = 0
-            elif 180 < r < 255 and 42 < g < 122 and 64 < b < 144:
-                color = 0
-            elif 132 < r < 212 and 22 < g < 102 and 190 < b < 255:
-                color = 0
-            else:
-                color = 255
-            
-            img[y][x] = [color, color, color]
+    # 各条件に合致する部分を検出
+    mask1 = np.logical_and(94 < r, np.logical_and(r < 175, np.logical_and(179 < g, np.logical_and(g < 255, np.logical_and(28 < b, b < 108)))))
+    mask2 = np.logical_and(54 < r, np.logical_and(r < 134, np.logical_and(144 < g, np.logical_and(g < 224, np.logical_and(192 < b, b < 255)))))
+    mask3 = np.logical_and(204 < r, np.logical_and(r < 255, np.logical_and(135 < g, np.logical_and(g < 215, np.logical_and(21 < b, b < 101)))))
+    mask4 = np.logical_and(180 < r, np.logical_and(r < 255, np.logical_and(42 < g, np.logical_and(g < 122, np.logical_and(64 < b, b < 144)))))
+    mask5 = np.logical_and(132 < r, np.logical_and(r < 212, np.logical_and(22 < g, np.logical_and(g < 102, np.logical_and(190 < b, b < 255)))))
+
+    # 当てはまるところを更新
+    mask_a = np.logical_or.reduce([mask1, mask2, mask3, mask4, mask5])
+    img[mask_a] = [0, 0, 0]
+
+    # 上記以外の部分を一括で更新
+    mask_b = np.logical_not(np.logical_or.reduce([mask1, mask2, mask3, mask4, mask5]))
+    img[mask_b] = [255, 255, 255]
 
     # get time of do-grayscale
     time_grayscale = time.time() - start
