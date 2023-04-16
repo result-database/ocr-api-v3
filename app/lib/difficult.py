@@ -9,12 +9,12 @@ tools = pyocr.get_available_tools()
 tool = tools[0]
 
 
-def getDifficult(url, psm):
+def getDifficult(img, psm):
     # timer start
     start = time.time()
 
-    # read image from url(http) as numpy-array(RGB)
-    img = openImg(url)
+    # # read image from url(http) as numpy-array(RGB)
+    # img = openImg(url)
 
     # crop img
     # left:0 top:0 right:1/2 bottom:6/7

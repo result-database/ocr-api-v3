@@ -13,7 +13,7 @@ tool = tools[0]
 judges = ['PERFECT', 'GREAT', 'GOOD', 'BAD', 'MISS']
 search_content = cv2.cvtColor(cv2.imread('./lib/template.png'), cv2.COLOR_BGR2RGB)
 
-def getJudge(url, psm, border):
+def getJudge(img, psm, border):
     # timer start
     start = time.time()
     
@@ -35,8 +35,9 @@ def getJudge(url, psm, border):
     # generaet builder
     builder = pyocr.builders.DigitBuilder(tesseract_layout=psm)
 
-    # read image from url(http) as numpy-array(RGB)
-    search_target = openImg(url)
+    # # read image from url(http) as numpy-array(RGB)
+    # search_target = openImg(url)
+    search_target = img
 
     # judgeの座標を取得
     point = get_point(face_img=search_content, full_img=search_target)

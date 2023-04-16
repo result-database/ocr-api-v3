@@ -9,7 +9,7 @@ import cv2
 tools = pyocr.get_available_tools()
 tool = tools[0]
 
-def getTitle(url, psm, border):
+def getTitle(img, psm, border):
     # validate border
     # arrow number (else, using 215)
     if border.isdecimal():
@@ -20,8 +20,8 @@ def getTitle(url, psm, border):
     # timer start
     start = time.time()
 
-    # read image from url(http) as numpy-array(RGB)
-    img = openImg(url)
+    # # read image from url(http) as numpy-array(RGB)
+    # img = openImg(url)
 
     # crop img
     # left:0 top:0 right:1/2 bottom:6/7

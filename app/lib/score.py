@@ -8,12 +8,12 @@ import time
 tools = pyocr.get_available_tools()
 tool = tools[0]
 
-def getScore(url, psm):
+def getScore(img, psm):
     # timer start
     start = time.time()
 
-    # read image from url(http) as numpy-array(RGB)
-    img = openImg(url)
+    # # read image from url(http) as numpy-array(RGB)
+    # img = openImg(url)
 
     # crop img
     # left:0 top:1/6 right:1/2 bottom:1/2
