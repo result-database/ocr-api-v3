@@ -12,9 +12,6 @@ from lib.util import openImg
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
-from concurrent.futures import ProcessPoolExecutor
-import asyncio
-
 class ReqType(BaseModel):
     url: str
     psmScore: int = Field(default=6, enum=[6, 7])
@@ -30,23 +27,6 @@ class ReqType(BaseModel):
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-@app.post('/ocr/v1')
-async def ocr_v1(request: ReqType):
-    img = openImg(request.url)
-    def process_ocr_with_processes(img):
-        with ProcessPoolExecutor() as executor:
-            score = executor.submit(getScore, img.copy(), request.psmScore)
-            difficult = executor.submit(getDifficult, img.copy(), request.psmDifficult)
-            title = executor.submit(getTitle, img.copy(), request.psmTitle, request.borderTitle)
-            judge = executor.submit(getJudge, img.copy(), request.psmJudge, request.borderJudge)
-
-        return {'score': score.result(), 'difficult': difficult.result(), 'title': title.result(), 'judge':judge.result()}
-
-    # 並列処理でOCRを実行して結果を返す
-    loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(None, process_ocr_with_processes, img)
-    return result
 
 @app.post('/ocr/v2')
 def ocr_v2(request: ReqType):

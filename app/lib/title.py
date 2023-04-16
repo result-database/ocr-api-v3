@@ -43,6 +43,9 @@ def getTitle(img, psm, border):
     img[mask] = [0, 0, 0]
     img[np.logical_not(mask)] = [255, 255, 255]
 
+    # blur
+    img = cv2.blur(img, (3, 3))
+
     # generate builder
     builder = pyocr.builders.TextBuilder(tesseract_layout=psm)
 
