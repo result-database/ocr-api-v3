@@ -98,42 +98,31 @@ def grayscale(dst, color_range):
     # 例の青緑色を黒,それ以外を白にして出力する
     np_dst = np.full((dst.shape[0], dst.shape[1]), 0)
 
-    for y in range(dst.shape[0]):
-        for x in range(dst.shape[1]):
-            r, g, b = dst[y][x]
 
-            if r<=70 and 215 <= g <= 255 and 205<=b<=236:
-                a = 0
-            elif 114-color_range < r < 144+color_range and 241-color_range < g < 241+color_range and 219-color_range < b < 219+color_range:
-                a = 0
-            elif 108-color_range < r < 108+color_range and 193-color_range < g < 193+color_range and 190-color_range < b < 190+color_range:
-                a = 0
-            elif 115-color_range < r < 115+color_range and 233-color_range < g < 233+color_range and 215-color_range < b < 215+color_range:
-                a = 0
-            else:
-                a = 255
-            
-            np_dst[y][x] = a
-      
+    r, g, b = dst[:, :, 0], dst[:, :, 1], dst[:, :, 2]
+    mask1 = (r <= 70) & (215 <= g) & (g <= 255) & (205 <= b) & (b <= 236)
+    mask2 = (114 - color_range < r) & (r < 144 + color_range) & (241 - color_range < g) & (g < 241 + color_range) & (219 - color_range < b) & (b < 219 + color_range)
+    mask3 = (108 - color_range < r) & (r < 108 + color_range) & (193 - color_range < g) & (g < 193 + color_range) & (190 - color_range < b) & (b < 190 + color_range)
+    mask4 = (115 - color_range < r) & (r < 115 + color_range) & (233 - color_range < g) & (g < 233 + color_range) & (215 - color_range < b) & (b < 215 + color_range)
+
+    a = np.where(mask1 | mask2 | mask3 | mask4, 0, 255)
+
+    np_dst = a[..., np.newaxis]
+
     return np_dst
 
 def black_line(np_dst, search_target_ratio):
     # 縦のすべての列が黒の地点のx座標を調べる
-    result = []
+    # 縦方向の列の合計を計算する
+    col_sum = np_dst.sum(axis=0)
 
-    for x in range(np_dst.shape[1]):
-        b = False
-        for y in range(np_dst.shape[0]):
-            if np_dst[y][x] == 0:
-                b = True
-            else:
-                # 白なら抜ける
-                break
-        if b:
-            # 縦すべてが黒の時
-            result.append(math.floor((1 / search_target_ratio) * x))
+    # col_sum において、値が 0 であるインデックスを取得する
+    black_cols = np.where(col_sum == 0)[0]
 
-    return result
+    # 黒い列のx座標を計算する
+    black_cols = (black_cols * (1 / search_target_ratio)).astype(np.int64)
+
+    return black_cols
 
 class Ratio:
     def __init__(self, ratio, full_hight, tl, br):
