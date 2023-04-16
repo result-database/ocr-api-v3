@@ -24,16 +24,14 @@ def getScore(url, psm):
     start = time.time()
 
     # to grayscale
-    for y in range(img.shape[0]):
-        for x in range(img.shape[1]):
-            r, g, b = img[y][x]
+    r = img[:, :, 0]
+    g = img[:, :, 1]
+    b = img[:, :, 2]
+    mask = np.logical_and(225 <= r, np.logical_and(r <= 255, np.logical_and(55 <= g, np.logical_and(g <= 115, np.logical_and(140 <= b, b <= 200)))))
 
-            if 225 <= r <= 255 and 55 <= g <= 115 and 140 <= b <= 200:
-                color = 0
-            else:
-                color = 255
-
-            img[y][x] = [color, color, color]
+    # 一括で更新
+    img[mask] = [0, 0, 0]
+    img[np.logical_not(mask)] = [255, 255, 255]
 
     # get time of do-grayscale
     time_grayscale = time.time() - start
