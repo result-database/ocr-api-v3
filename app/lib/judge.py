@@ -17,20 +17,20 @@ def getJudge(img, psm, border):
     # timer start
     start = time.time()
     
-    # validate border
-    # arrow number (else, using 230)
-    if border.isdecimal():
-        border = int(border)
-    else:
-        border = 230
+    # # validate border
+    # # arrow number (else, using 230)
+    # if border.isdecimal():
+    #     border = int(border)
+    # else:
+    #     border = 230
 
-    # validate psm-args
-    # arrow '6' or '7' (else, using 6)
-    if psm == "6" or psm == "7":
-        # using psm from args as int(number)
-        psm = int(psm)
-    else:
-        psm = 6
+    # # validate psm-args
+    # # arrow '6' or '7' (else, using 6)
+    # if psm == "6" or psm == "7":
+    #     # using psm from args as int(number)
+    #     psm = int(psm)
+    # else:
+    #     psm = 6
 
     # generaet builder
     builder = pyocr.builders.DigitBuilder(tesseract_layout=psm)

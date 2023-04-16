@@ -47,13 +47,13 @@ def getDifficult(img, psm):
     time_grayscale = time.time() - start
     start = time.time()
 
-    # validate psm-args
-    # arrow '6' or '7' (else, using 7)
-    if psm == "6" or psm == "7":
-        # using psm from args as int(number)
-        psm = int(psm)
-    else:
-        psm = 7
+    # # validate psm-args
+    # # arrow '6' or '7' (else, using 7)
+    # if psm == "6" or psm == "7":
+    #     # using psm from args as int(number)
+    #     psm = int(psm)
+    # else:
+    #     psm = 7
 
     # generate builder
     builder = pyocr.builders.TextBuilder(tesseract_layout=psm)

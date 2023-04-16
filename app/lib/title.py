@@ -10,12 +10,12 @@ tools = pyocr.get_available_tools()
 tool = tools[0]
 
 def getTitle(img, psm, border):
-    # validate border
-    # arrow number (else, using 215)
-    if border.isdecimal():
-        border = int(border)
-    else:
-        border = 215
+    # # validate border
+    # # arrow number (else, using 215)
+    # if border.isdecimal():
+    #     border = int(border)
+    # else:
+    #     border = 215
 
     # timer start
     start = time.time()
@@ -54,13 +54,13 @@ def getTitle(img, psm, border):
     img[mask] = [0, 0, 0]
     img[np.logical_not(mask)] = [255, 255, 255]
 
-    # validate psm-args
-    # arrow '6' or '7' or '11' (else, using 11)
-    if psm == "6" or psm == "7" or psm == '11':
-        # using psm from args as int(number)
-        psm = int(psm)
-    else:
-        psm = 11
+    # # validate psm-args
+    # # arrow '6' or '7' or '11' (else, using 11)
+    # if psm == "6" or psm == "7" or psm == '11':
+    #     # using psm from args as int(number)
+    #     psm = int(psm)
+    # else:
+    #     psm = 11
 
     # generate builder
     builder = pyocr.builders.TextBuilder(tesseract_layout=psm)
