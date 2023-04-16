@@ -58,8 +58,6 @@ def getTitle(url, psm, border):
     # create margin
     img = cv2.copyMakeBorder(img, 50, 50, 50, 50, cv2.BORDER_CONSTANT, value=[0,0,0])  
 
-    print(img.shape)
-
     r = img[:, :, 0]
     g = img[:, :, 1]
     b = img[:, :, 2]
@@ -101,7 +99,5 @@ def getTitle(url, psm, border):
         },
         "result": result,
     }
-
-    print(result)
 
     return res
