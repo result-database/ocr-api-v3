@@ -8,7 +8,7 @@ import cv2
 tools = pyocr.get_available_tools()
 tool = tools[0]
 
-def getTitle(img, psm, border):
+def getTitle(img, psm, blur, border):
     # timer start
     start = time.time()
 
@@ -43,8 +43,9 @@ def getTitle(img, psm, border):
     img[mask] = [0, 0, 0]
     img[np.logical_not(mask)] = [255, 255, 255]
 
-    # blur
-    img = cv2.blur(img, (3, 3))
+    # 余白作成とblur
+    if blur:
+        img = cv2.blur(img, (3, 3))
 
     # generate builder
     builder = pyocr.builders.TextBuilder(tesseract_layout=psm)

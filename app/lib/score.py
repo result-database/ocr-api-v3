@@ -8,7 +8,7 @@ import cv2
 tools = pyocr.get_available_tools()
 tool = tools[0]
 
-def getScore(img, psm):
+def getScore(img, psm, blur):
     # timer start
     start = time.time()
 
@@ -31,7 +31,8 @@ def getScore(img, psm):
     img[np.logical_not(mask)] = [255, 255, 255]
 
     # 余白作成とblur
-    img = cv2.blur(img, (3, 3))
+    if blur:
+        img = cv2.blur(img, (3, 3))
     img = cv2.copyMakeBorder(img, 50, 50, 50, 50, cv2.BORDER_CONSTANT, value=[255,255,255])  
 
     # get time of do-grayscale

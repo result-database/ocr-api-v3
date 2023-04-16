@@ -33,10 +33,10 @@ def ocr_v2(request: ReqType):
     # urlじゃなくてnd-arrayを送りつける
     img = openImg(request.url)
     return {
-        'score': getScore(img.copy(), request.psmScore), 
-        'difficult': getDifficult(img.copy(), request.psmDifficult), 
-        'title': getTitle(img.copy(), request.psmTitle, request.borderTitle), 
-        'judge': getJudge(img.copy(), request.psmJudge, request.borderJudge)
+        'score': getScore(img.copy(), request.psmScore, request.blurScore), 
+        'difficult': getDifficult(img.copy(), request.psmDifficult, request.blurDifficult), 
+        'title': getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle), 
+        'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge)
     }
 
 @app.get('/candidate/difficult')
