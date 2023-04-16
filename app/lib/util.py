@@ -2,9 +2,6 @@ from PIL import Image
 import requests
 import io
 import numpy as np
-import os
-import pyocr
-import pyocr.builders
 import cv2
 import math
 

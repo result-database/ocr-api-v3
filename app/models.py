@@ -1,6 +1,5 @@
 from db import Base
-from sqlalchemy import String, Boolean, Integer, Column,Text, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import String, Integer, Column,Text, ForeignKey
 
 class Music(Base):
     __tablename__ = 'musics'

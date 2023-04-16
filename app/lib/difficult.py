@@ -26,9 +26,7 @@ def getDifficult(url, psm):
 
     # to grayscale
     # ループを使わずに条件式を計算して処理を高速化
-    r = img[:, :, 0]
-    g = img[:, :, 1]
-    b = img[:, :, 2]
+    r, g, b = img[:, :, 0], img[:, :, 1], img[:, :, 2]
 
     # 各条件に合致する部分を検出
     mask1 = np.logical_and(94 < r, np.logical_and(r < 175, np.logical_and(179 < g, np.logical_and(g < 255, np.logical_and(28 < b, b < 108)))))

@@ -59,3 +59,15 @@ def img():
         media_type="image/jpeg"
     )
 ```
+
+```python
+def has_duplicates(seq):
+    return len(seq) != len(set(seq))
+```
+
+```python
+import hashlib
+
+def sha256(target):
+    return hashlib.sha256(target.encode()).hexdigest()
+```
