@@ -13,7 +13,7 @@ from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
 class ReqType(BaseModel):
-    url: str = Field(default="https://raw.githubusercontent.com/Cosmic-rare/result-database-jupyter/main/targets/wide.png")
+    url: str = Field(default="http://localhost:8080/static/wide.png")
     psmScore: int = Field(default=6, enum=[6, 7])
     psmDifficult: int = Field(default=7, enum=[6, 7])
     psmTitle: int = Field(default=11, enum=[6, 7, 11])
