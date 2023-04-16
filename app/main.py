@@ -23,6 +23,10 @@ class ReqType(BaseModel):
     psmJudge: int = Field(default=6, enum=[6, 7])
     borderTitle: int = Field(default=215, ge=215, le=255)
     borderJudge: int = Field(default=230, ge=230, le=255)
+    blurScore: bool = Field(default=True)
+    blurDifficult: bool = Field(default=True)
+    blurTitle: bool = Field(default=True)
+    blurJudge: bool = Field(default=True)
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
