@@ -1,12 +1,5 @@
 # ocr-api
 
-## ToDo
-
-- ぼかしを検討
-  - difficult
-  - title
-  - score
-
 ## Memo
 
 ```python
