@@ -63,8 +63,6 @@ def get_music(db: Session = Depends(get_db)):
 
 @app.get("/set")
 def set_sample_data(db: Session = Depends(get_db)):
-    result = db.execute(text('SELECT version();'))
-
     db.query(models.Music).delete()
     db.commit()
 
@@ -92,7 +90,7 @@ def set_sample_data(db: Session = Depends(get_db)):
         db.add(item)
     db.commit()
 
-    return { "ok": True, "version": str(result.scalar()) }
+    return { "ok": True }
 
 @app.get('/candidate/difficult')
 def candidate_difficult(data):
