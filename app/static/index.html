@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type='text/javascript' src="https://cdn.jsdelivr.net/npm/jsondiffpatch/dist/jsondiffpatch.umd.min.js"></script>
+        <link rel="stylesheet" href="css.css">
+    </head>
+    <body>
+        <div id="visual"></div>
+        <script>
+          fetch('http://localhost:8080/music')
+            .then(response => response.json())
+            .then(jsonA => {
+              fetch('http://localhost:8080/get')
+                .then(response => response.json())
+                .then(jsonB => {
+                  left = jsonA.data
+                  right = jsonB.result
+                  var delta = jsondiffpatch.diff(left, right);
+
+                  document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, left);
+                });
+            });
+        </script>
+    </body>
+</html>
