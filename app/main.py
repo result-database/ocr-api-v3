@@ -39,6 +39,10 @@ def ocr_v2(request: ReqType):
         'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge)
     }
 
+@app.get("/set")
+def set_sample_data():
+    return { "ok": True }
+
 @app.get('/candidate/difficult')
 def candidate_difficult(data):
     return {'candidate': candidateDifficult(data)}
