@@ -17,6 +17,9 @@ from lib.util import openImg
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
 
+import requests
+import json
+
 class ReqType(BaseModel):
     url: str = Field(default="http://localhost:8080/static/wide.png")
     psmScore: int = Field(default=6, enum=[6, 7])
@@ -53,9 +56,42 @@ def ocr_v2(request: ReqType):
         'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge)
     }
 
+@app.get("/music")
+def get_music(db: Session = Depends(get_db)):
+    music_db = db.query(models.Music).all()
+    return { "data": music_db }
+
 @app.get("/set")
 def set_sample_data(db: Session = Depends(get_db)):
     result = db.execute(text('SELECT version();'))
+
+    db.query(models.Music).delete()
+    db.commit()
+
+    data_json = requests.get('http://localhost:8080/static/data/old-data.json').text
+    for data in json.loads(data_json):
+        item = models.Music(
+            id = data['id'],
+            title = data['title'],
+            pronunciation = data['pronunciation'],
+            creator = data['creator'],
+            lyricist = data['lyricist'],
+            composer = data['composer'],
+            arranger = data['arranger'],
+            level_easy = data['level_easy'],
+            level_normal = data['level_normal'],
+            level_hard = data['level_hard'],
+            level_expert = data['level_expert'],
+            level_master = data['level_master'],
+            totalNote_easy = data['totalNote_easy'],
+            totalNote_normal = data['totalNote_normal'],
+            totalNote_hard = data['totalNote_hard'],
+            totalNote_expert = data['totalNote_expert'],
+            totalNote_master = data['totalNote_master']
+        )
+        db.add(item)
+    db.commit()
+
     return { "ok": True, "version": str(result.scalar()) }
 
 @app.get('/candidate/difficult')

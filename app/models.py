@@ -23,8 +23,6 @@ class Music(Base):
     totalNote_expert = Column(Integer, nullable=True, unique=False)
     totalNote_master = Column(Integer, nullable=True, unique=False)
 
-    hash = Column(String(255), unique=False)
-
     def toDict(self):
         return {
             'id': self.id,
@@ -43,6 +41,5 @@ class Music(Base):
             "totalNote_normal": self.totalNote_normal,
             "totalNote_hard": self.totalNote_hard,
             "totalNote_expert": self.totalNote_expert,
-            "totalNote_master": self.totalNote_master,
-            "hash": self.hash
+            "totalNote_master": self.totalNote_master
         }
