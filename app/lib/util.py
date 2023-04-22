@@ -5,6 +5,9 @@ import numpy as np
 import cv2
 import math
 
+def has_duplicates(seq):
+    return len(seq) != len(set(seq))
+
 def is_float(s):
     try:
         float(s)
