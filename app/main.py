@@ -12,7 +12,7 @@ from lib.difficult import getDifficult
 from lib.title import getTitle
 from lib.judge import getJudge
 
-from lib.util import openImg
+from lib.util import openImg, load_diff
 
 from lib.candidate import candidateDifficult
 from lib.candidate import candidateTitle
@@ -60,6 +60,35 @@ def ocr_v2(request: ReqType):
 def get_music(db: Session = Depends(get_db)):
     music_db = db.query(models.Music).all()
     return { "data": music_db }
+
+@app.get("/get")
+def get_new_data():
+    # httpから取得
+    music = json.loads(requests.get('http://localhost:8080/static/data/music.json').text)
+    difficult = json.loads(requests.get('http://localhost:8080/static/data/difficult.json').text)
+
+    if load_diff(music=music, difficult=difficult):
+        return { 'ok': False }
+
+    # データの結合
+    result = []
+    for m in music:
+        tmp = {
+            "id": m["id"],
+            "title": m["title"],
+            "pronunciation": m["pronunciation"],
+            "creator": m["creator"],
+            "lyricist": m["lyricist"],
+            "composer": m["composer"],
+            "arranger": m["arranger"]
+        }
+        for d in difficult:
+            if d["musicId"] == m["id"]:
+                tmp["level_" + d["musicDifficulty"]] = d["playLevel"]
+                tmp["totalNote_" + d["musicDifficulty"]] = d["totalNoteCount"]
+        result.append(tmp)
+
+    return { "ok": True, "result": result }
 
 @app.get("/set")
 def set_sample_data(db: Session = Depends(get_db)):
