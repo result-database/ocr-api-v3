@@ -2,7 +2,6 @@
 
 ## めんどくさいので、musicにdifficultを押し込む(カラムを極限まで増やす)
 
-- DBをJSONとして吐き出すAPI
 - ReactでAPIとJSONでDiffを表示する
 - ボタン一つでJSONをApplyするAPI
 
