@@ -59,7 +59,10 @@ def ocr_v2(request: ReqType):
 @app.get("/music")
 def get_music(db: Session = Depends(get_db)):
     music_db = db.query(models.Music).all()
-    return { "data": music_db }
+    tmp = {}
+    for m in music_db:
+        tmp[m.id] = m
+    return { "data": tmp }
 
 @app.get("/get")
 def get_new_data():
@@ -71,7 +74,7 @@ def get_new_data():
         return { 'ok': False }
 
     # データの結合
-    result = []
+    result = {}
     for m in music:
         tmp = {
             "id": m["id"],
@@ -86,7 +89,7 @@ def get_new_data():
             if d["musicId"] == m["id"]:
                 tmp["level_" + d["musicDifficulty"]] = d["playLevel"]
                 tmp["totalNote_" + d["musicDifficulty"]] = d["totalNoteCount"]
-        result.append(tmp)
+        result[tmp["id"]] = tmp
 
     return { "ok": True, "result": result }
 
