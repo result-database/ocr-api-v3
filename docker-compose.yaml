@@ -9,17 +9,13 @@ services:
     ports:
       - 8080:8080
 
-  # db:
-  #   image: postgres:15
-  #   container_name: postgres
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - db-store2:/data/postgres
-  #   environment:
-  #     POSTGRES_USER: "admin"
-  #     POSTGRES_PASSWORD: "admin-pass"
-  #     PGDATA: /data/postgres
-
-volumes:
-  db-store2:
+  db:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres

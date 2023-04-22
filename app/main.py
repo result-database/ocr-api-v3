@@ -1,6 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field, BaseModel
+
+import models
+from db import SessionLocal, engine
+from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 from lib.score import getScore
 from lib.difficult import getDifficult
@@ -25,6 +30,15 @@ class ReqType(BaseModel):
     blurTitle: bool = Field(default=True)
     blurJudge: bool = Field(default=True)
 
+models.Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -40,8 +54,9 @@ def ocr_v2(request: ReqType):
     }
 
 @app.get("/set")
-def set_sample_data():
-    return { "ok": True }
+def set_sample_data(db: Session = Depends(get_db)):
+    result = db.execute(text('SELECT version();'))
+    return { "ok": True, "version": str(result.scalar()) }
 
 @app.get('/candidate/difficult')
 def candidate_difficult(data):
