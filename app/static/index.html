@@ -17,7 +17,11 @@
                 const older = jsonA.data
                 const newer = jsonB.result
                 const delta = jsondiffpatch.diff(older, newer);
-                document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);
+                if (delta) {
+                  document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);
+                } else {
+                  document.getElementById('visual').innerHTML = "<h1>Same!</h1>"
+                }
               } else {
                 document.getElementById('visual').innerHTML = "<h1>Error!</h1>"
               }
