@@ -17,6 +17,20 @@
                   right = jsonB.result
                   var delta = jsondiffpatch.diff(left, right);
 
+                  Object.keys(delta).forEach((key) => {
+                    if (!Array.isArray(delta[key])) {
+                      console.log("modified", key)
+                    } else if (delta[key].length == 1) {
+                      console.log("added", key)
+                    } else {
+                      console.log("deleted", key)
+                    }
+                  })
+
+                  const patched = jsondiffpatch.clone(left)
+                  jsondiffpatch.patch(patched, delta)
+                  console.log(patched)
+
                   document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, left);
                 });
             });
