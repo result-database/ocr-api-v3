@@ -13,10 +13,14 @@
           fetch('http://localhost:8080/get')
             .then(response => response.json())
             .then(jsonB => {
-              const older = jsonA.data
-              const newer = jsonB.result
-              const delta = jsondiffpatch.diff(older, newer);
-              document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);
+              if (jsonB.ok) {
+                const older = jsonA.data
+                const newer = jsonB.result
+                const delta = jsondiffpatch.diff(older, newer);
+                document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);
+              } else {
+                document.getElementById('visual').innerHTML = "<h1>Error!</h1>"
+              }
             });
         });
     </script>
