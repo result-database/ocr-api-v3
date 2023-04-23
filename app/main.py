@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field, BaseModel
+from typing import Dict
 
 import models
 from db import SessionLocal, engine
@@ -20,6 +21,25 @@ from lib.candidate import candidateTitle
 import requests
 import json
 
+class Music(BaseModel):
+    id: int
+    title: str
+    pronunciation: str
+    creator: str
+    lyricist: str
+    composer: str
+    arranger: str
+    level_easy: int
+    level_normal: int
+    level_hard: int
+    level_expert: int
+    level_master: int
+    totalNote_easy: int
+    totalNote_normal: int
+    totalNote_hard: int
+    totalNote_expert: int
+    totalNote_master: int
+
 class ReqType(BaseModel):
     url: str = Field(default="http://localhost:8080/static/wide.png")
     psmScore: int = Field(default=6, enum=[6, 7])
@@ -34,7 +54,7 @@ class ReqType(BaseModel):
     blurJudge: bool = Field(default=True)
 
 class ReqType2(BaseModel):
-    data: object
+    data: Dict[str, Music]
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -64,28 +84,26 @@ def apply_patch(request: ReqType2, db: Session = Depends(get_db)):
     db.query(models.Music).delete()
     db.commit()
 
-    print(request.data.keys())
-
     for id in request.data.keys():
         data = request.data[id]
         item = models.Music(
-            id = data['id'],
-            title = data['title'],
-            pronunciation = data['pronunciation'],
-            creator = data['creator'],
-            lyricist = data['lyricist'],
-            composer = data['composer'],
-            arranger = data['arranger'],
-            level_easy = data['level_easy'],
-            level_normal = data['level_normal'],
-            level_hard = data['level_hard'],
-            level_expert = data['level_expert'],
-            level_master = data['level_master'],
-            totalNote_easy = data['totalNote_easy'],
-            totalNote_normal = data['totalNote_normal'],
-            totalNote_hard = data['totalNote_hard'],
-            totalNote_expert = data['totalNote_expert'],
-            totalNote_master = data['totalNote_master']
+            id = data.id,
+            title = data.title,
+            pronunciation = data.pronunciation,
+            creator = data.creator,
+            lyricist = data.lyricist,
+            composer = data.composer,
+            arranger = data.arranger,
+            level_easy = data.level_easy,
+            level_normal = data.level_normal,
+            level_hard = data.level_hard,
+            level_expert = data.level_expert,
+            level_master = data.level_master,
+            totalNote_easy = data.totalNote_easy,
+            totalNote_normal = data.totalNote_normal,
+            totalNote_hard = data.totalNote_hard,
+            totalNote_expert = data.totalNote_expert,
+            totalNote_master = data.totalNote_master
         )
         db.add(item)
     db.commit()
