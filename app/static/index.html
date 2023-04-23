@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script type='text/javascript' src="https://cdn.jsdelivr.net/npm/jsondiffpatch/dist/jsondiffpatch.umd.min.js"></script>
-        <link rel="stylesheet" href="css.css">
-    </head>
-    <body>
-        <div id="visual"></div>
-        <script>
-          fetch('http://localhost:8080/music')
+  <head>
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/npm/jsondiffpatch/dist/jsondiffpatch.umd.min.js"></script>
+    <link rel="stylesheet" href="css.css">
+  </head>
+  <body>
+    <div id="visual"></div>
+    <script>
+      fetch('http://localhost:8080/music')
+        .then(response => response.json())
+        .then(jsonA => {
+          fetch('http://localhost:8080/get')
             .then(response => response.json())
-            .then(jsonA => {
-              fetch('http://localhost:8080/get')
-                .then(response => response.json())
-                .then(jsonB => {
-                  left = jsonA.data
-                  right = jsonB.result
-                  var delta = jsondiffpatch.diff(left, right);
-
-                  Object.keys(delta).forEach((key) => {
-                    if (!Array.isArray(delta[key])) {
-                      console.log("modified", key)
-                    } else if (delta[key].length == 1) {
-                      console.log("added", key)
-                    } else {
-                      console.log("deleted", key)
-                    }
-                  })
-
-                  const patched = jsondiffpatch.clone(left)
-                  jsondiffpatch.patch(patched, delta)
-                  console.log(patched)
-
-                  document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, left);
-                });
+            .then(jsonB => {
+              const older = jsonA.data
+              const newer = jsonB.result
+              const delta = jsondiffpatch.diff(older, newer);
+              document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);
             });
-        </script>
-    </body>
+        });
+    </script>
+  </body>
 </html>
