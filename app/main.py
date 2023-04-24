@@ -158,12 +158,3 @@ def set_from_online(db: Session = Depends(get_db)):
     db.commit()
 
     return { "ok": True }
-
-@app.get('/candidate/difficult')
-def candidate_difficult(data):
-    return {'candidate': candidateDifficult(data)}
-
-@app.get('/candidate/title')
-def candidate_title(data, ratio, db: Session = Depends(get_db)):
-    music_db = db.query(models.Music.id, models.Music.title).all()
-    return {'candidate': candidateTitle(data, ratio, music_db)}
