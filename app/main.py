@@ -31,6 +31,7 @@ class ReqType(BaseModel):
     blurDifficult: bool = Field(default=True)
     blurTitle: bool = Field(default=True)
     blurJudge: bool = Field(default=True)
+    candidateRatio: float = Field(default=0.3)
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -45,14 +46,19 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.post('/ocr/v2')
-def ocr_v2(request: ReqType):
+def ocr_v2(request: ReqType, db: Session = Depends(get_db)):
     # urlじゃなくてnd-arrayを送りつける
     img = openImg(request.url)
+    
+
+    title = getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle)
+
     return {
         'score': getScore(img.copy(), request.psmScore, request.blurScore), 
         'difficult': getDifficult(img.copy(), request.psmDifficult, request.blurDifficult), 
-        'title': getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle), 
-        'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge)
+        'title': title, 
+        'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge),
+        'candidateTitle': candidateTitle(title["result"], request.candidateRatio, db, models)
     }
 
 @app.get("/music")

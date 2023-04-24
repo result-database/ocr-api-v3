@@ -1,7 +1,6 @@
 import difflib
-import json
 from lib.util import sort_for_difficult
-from lib.util import is_float
+import time
 
 def candidateDifficult(target):
     difficults = ['EASY', 'NORMAL', 'HARD', 'EXPERT', 'MASTER']
@@ -15,21 +14,42 @@ def candidateDifficult(target):
 
     return datas
 
-def candidateTitle(target, ratio, music_db):
-    # validate border
-    # arrow number (else, using 0.5)
-    if is_float(ratio):
-        ratio = float(ratio)
-    else:
-        ratio = 0.5
+def candidateTitle(target, ratio, db, models):
+    # timer start
+    start = time.time()
 
-    music = music_db
+    music_db = db.query(models.Music.id, models.Music.title).all()
+
+    # get time of get-musics-from-db
+    time_query = time.time() - start
+    start = time.time()
+
     datas = []
 
-    for j in music:
+    for j in music_db:
         result = difflib.SequenceMatcher(None, target, j[1]).ratio()
 
         if result > ratio:
             datas.append({'title': j[1], 'credibility': result, 'musicId': j[0]})
 
-    return sort_for_difficult(datas)
+    # get time of do-preprocessing
+    time_preprocess = time.time() - start
+    start = time.time()
+
+    datas = sort_for_difficult(datas)
+
+    # get time of sort
+    time_sort = time.time() - start
+    start = time.time()
+
+    result = {
+        "ratio": ratio,
+        "time": {
+            "database": time_query,
+            "preprocess": time_preprocess,
+            "sort": time_sort
+        },
+        "result": datas
+    }
+
+    return result
