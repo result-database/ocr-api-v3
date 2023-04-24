@@ -8,7 +8,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "url": "http://localhost:8080/static/wide.png",
+  "url": "http://localhost:8080/static/target.jpg",
   "psmScore": 6,
   "psmDifficult": 7,
   "psmTitle": 11,
@@ -18,7 +18,8 @@ curl -X 'POST' \
   "blurScore": true,
   "blurDifficult": true,
   "blurTitle": true,
-  "blurJudge": true
+  "blurJudge": true,
+  "candidateRatio": 0.3
 }'
 ```
 
@@ -28,19 +29,19 @@ curl -X 'POST' \
     "builder": "DigitBuilder",
     "psm": "6",
     "time": {
-      "preprocessing": 0.0003681182861328125,
-      "grayscale": 0.02746105194091797,
-      "ocr": 0.29795384407043457
+      "preprocessing": 1.049041748046875e-05,
+      "grayscale": 0.012390851974487305,
+      "ocr": 0.15609359741210938
     },
-    "result": "596068"
+    "result": "462713"
   },
   "difficult": {
     "builder": "TextBuilder + whitelist",
     "psm": "7",
     "time": {
-      "preprocessing": 0.000011205673217773438,
-      "grayscale": 0.007710933685302734,
-      "ocr": 0.15625810623168945
+      "preprocessing": 1.1444091796875e-05,
+      "grayscale": 0.007577657699584961,
+      "ocr": 0.1644895076751709
     },
     "result": "EXPERT"
   },
@@ -48,26 +49,78 @@ curl -X 'POST' \
     "builder": "TextBuilder",
     "psm": "11",
     "time": {
-      "preprocessing": 0.000010728836059570312,
-      "grayscale": 0.004464626312255859,
-      "ocr": 0.18338227272033691
+      "preprocessing": 1.1444091796875e-05,
+      "grayscale": 0.005440473556518555,
+      "ocr": 0.1829392910003662
     },
-    "result": "BrandNewDay"
+    "result": "Nsで2インビジブル"
   },
   "judge": {
     "builder": "DigitBuilder",
     "psm": "6",
     "time": {
-      "prepare": 0.36309003829956055,
-      "ocr": 0.5867767333984375
+      "prepare": 0.25745630264282227,
+      "ocr": 0.6182889938354492
     },
     "result": {
-      "PERFECT": "1238",
-      "GREAT": "22",
-      "GOOD": "0",
+      "PERFECT": "1283",
+      "GREAT": "82",
+      "GOOD": "4",
       "BAD": "0",
-      "MISS": "0"
+      "MISS": "16"
     }
+  },
+  "candidateTitle": {
+    "ratio": 0.3,
+    "time": {
+      "database": 0.007360935211181641,
+      "process": 0.0038421154022216797,
+      "sort": 4.291534423828125e-06
+    },
+    "result": [
+      {
+        "title": "インビジブル",
+        "credibility": 0.75,
+        "musicId": 284
+      },
+      {
+        "title": "インタビュア",
+        "credibility": 0.375,
+        "musicId": 330
+      },
+      {
+        "title": "フロイライン＝ビブリォチカ",
+        "credibility": 0.34782608695652173,
+        "musicId": 251
+      }
+    ]
+  },
+  "candidateDifficult": {
+    "time": {
+      "process": 7.43865966796875e-05
+    },
+    "result": [
+      {
+        "credibility": 1.0,
+        "musicDifficulty": "EXPERT"
+      },
+      {
+        "credibility": 0.3333333333333333,
+        "musicDifficulty": "MASTER"
+      },
+      {
+        "credibility": 0.2,
+        "musicDifficulty": "EASY"
+      },
+      {
+        "credibility": 0.2,
+        "musicDifficulty": "HARD"
+      },
+      {
+        "credibility": 0.16666666666666666,
+        "musicDifficulty": "NORMAL"
+      }
+    ]
   }
 }
 ```
