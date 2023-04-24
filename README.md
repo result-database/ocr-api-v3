@@ -1,5 +1,11 @@
 # ocr-api
 
+## How to use (主にDB周り)
+
+- `static/index.html`を見てremoteをapplyするか決める
+  - `set-online`する
+  - `DB`を直接いじる(`static/index.html`を見ながら)
+
 ## テストデータのメモ
 
 - id1(`Tell Your World`)の読み
@@ -10,6 +16,11 @@
   - `ヒバナ -Reloaded-`が追加
 
 ## Memo
+
+- `set-online`は何が何でも保護しなければならない
+- ほかはオープンでOK
+
+---
 
 ```python
 img = cv2.imread('./img.png')
