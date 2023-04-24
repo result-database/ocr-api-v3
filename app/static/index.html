@@ -7,31 +7,14 @@
   </head>
 
   <body>
-    <button onclick="apply()">apply!</button>
     <div id="visual"></div>
     <script>
-      async function apply() {
-        if (applyData) {
-          console.log(applyData)
-          try {
-            const res = await axios.post("http://localhost:8080/apply", {data: applyData})
-            main()
-          } catch(err) {
-            alert(err.response.status)
-          }
-        }
-      }
-    </script>
-    <script>
-      let applyData = null
-
       async function main() {
         let jsonA = await axios.get('http://localhost:8080/music')
         let jsonB = await axios.get('http://localhost:8080/get')
         if (jsonB.data.ok) {
           const older = jsonA.data.data
-          const newer = jsonB.data.result
-          applyData = newer
+          const newer = jsonB.data.data
           const delta = jsondiffpatch.diff(older, newer);
           if (delta) {
             document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, older);

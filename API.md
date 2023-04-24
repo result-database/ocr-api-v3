@@ -85,60 +85,11 @@ curl -X 'GET' \
   "data": {
     "1": {
       "id": 1,
-      "creator": "livetune",
-      "composer": "kz",
-      "level_easy": 5,
-      "level_hard": 16,
-      "level_master": 26,
-      "totalNote_normal": 492,
-      "totalNote_expert": 961,
-      "lyricist": "kz",
-      "title": "Tell Your World",
-      "pronunciation": "てるゆあわーるど",
-      "arranger": "kz",
-      "level_normal": 10,
-      "level_expert": 22,
-      "totalNote_easy": 220,
-      "totalNote_hard": 719,
-      "totalNote_master": 1147
+      "creator": "livetune"....
     },
     "2": {
       "id": 2,
-      "creator": "みきとP",
-      "composer": "みきとP",
-      "level_easy": 7,
-      "level_hard": 17,
-      "level_master": 28,
-      "totalNote_normal": 296,
-      "totalNote_expert": 827,
-      "lyricist": "みきとP",
-      "title": "ロキ",
-      "pronunciation": "ろき",
-      "arranger": "みきとP",
-      "level_normal": 11,
-      "level_expert": 24,
-      "totalNote_easy": 166,
-      "totalNote_hard": 635,
-      "totalNote_master": 975
-    },
-    "3": {
-      "id": 3,
-      "creator": "Omoi",
-      "composer": "Omoi",
-      "level_easy": 9,
-      "level_hard": 19,
-      "level_master": 32,
-      "totalNote_normal": 477,
-      "totalNote_expert": 997,
-      "lyricist": "Sakurai",
-      "title": "テオ",
-      "pronunciation": "てお",
-      "arranger": "Omoi",
-      "level_normal": 14,
-      "level_expert": 27,
-      "totalNote_easy": 135,
-      "totalNote_hard": 681,
-      "totalNote_master": 1221
+      "creator": "みきとP"....
     }
   }
 }
@@ -155,65 +106,26 @@ curl -X 'GET' \
 ```
 {
   "ok": true,
-  "result": {
+  "data": {
     "1": {
       "id": 1,
-      "title": "Tell Your World",
-      "pronunciation": "てるゆあわーるどっどどどどど",
-      "creator": "livetune",
-      "lyricist": "kz",
-      "composer": "kz",
-      "arranger": "kz",
-      "level_easy": 5,
-      "totalNote_easy": 2,
-      "level_normal": 10,
-      "totalNote_normal": 492,
-      "level_hard": 16,
-      "totalNote_hard": 719,
-      "level_expert": 22,
-      "totalNote_expert": 961,
-      "level_master": 26,
-      "totalNote_master": 1147
+      "title": "Tell Your World"....
     },
     "3": {
       "id": 3,
-      "title": "テオ",
-      "pronunciation": "てお",
-      "creator": "Omoi",
-      "lyricist": "Sakurai",
-      "composer": "Omoi",
-      "arranger": "Omoi",
-      "level_easy": 9,
-      "totalNote_easy": 135,
-      "level_normal": 14,
-      "totalNote_normal": 477,
-      "level_hard": 19,
-      "totalNote_hard": 681,
-      "level_expert": 27,
-      "totalNote_expert": 997,
-      "level_master": 32,
-      "totalNote_master": 1221
+      "title": "テオ"....
     },
     "6": {
       "id": 6,
-      "title": "ヒバナ -Reloaded-",
-      "pronunciation": "ひばなりろーでっど",
-      "creator": "DECO*27",
-      "lyricist": "DECO*27",
-      "composer": "DECO*27",
-      "arranger": "Rockwell",
-      "level_easy": 9,
-      "totalNote_easy": 198,
-      "level_normal": 14,
-      "totalNote_normal": 394,
-      "level_hard": 19,
-      "totalNote_hard": 568,
-      "level_expert": 28,
-      "totalNote_expert": 808,
-      "level_master": 32,
-      "totalNote_master": 1060
+      "title": "ヒバナ -Reloaded-"....
     }
   }
+}
+
+---
+
+{
+  "ok": false
 }
 ```
 
@@ -221,7 +133,7 @@ curl -X 'GET' \
 
 ```
 curl -X 'GET' \
-  'http://localhost:8080/set' \
+  'http://localhost:8080/set-online' \
   -H 'accept: application/json'
 ```
 
@@ -229,80 +141,10 @@ curl -X 'GET' \
 {
   "ok": true
 }
-```
 
-## Apply `new_data`
+---
 
-```
-curl -X 'POST' \
-  'http://localhost:8080/apply' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "data": {
-    "1": {
-      "id": 1,
-      "title": "Tell Your World",
-      "pronunciation": "てるゆあわーるどっどどどどど",
-      "creator": "livetune",
-      "lyricist": "kz",
-      "composer": "kz",
-      "arranger": "kz",
-      "level_easy": 5,
-      "totalNote_easy": 2,
-      "level_normal": 10,
-      "totalNote_normal": 492,
-      "level_hard": 16,
-      "totalNote_hard": 719,
-      "level_expert": 22,
-      "totalNote_expert": 961,
-      "level_master": 26,
-      "totalNote_master": 1147
-    },
-    "3": {
-      "id": 3,
-      "title": "テオ",
-      "pronunciation": "てお",
-      "creator": "Omoi",
-      "lyricist": "Sakurai",
-      "composer": "Omoi",
-      "arranger": "Omoi",
-      "level_easy": 9,
-      "totalNote_easy": 135,
-      "level_normal": 14,
-      "totalNote_normal": 477,
-      "level_hard": 19,
-      "totalNote_hard": 681,
-      "level_expert": 27,
-      "totalNote_expert": 997,
-      "level_master": 32,
-      "totalNote_master": 1221
-    },
-    "6": {
-      "id": 6,
-      "title": "ヒバナ -Reloaded-",
-      "pronunciation": "ひばなりろーでっど",
-      "creator": "DECO*27",
-      "lyricist": "DECO*27",
-      "composer": "DECO*27",
-      "arranger": "Rockwell",
-      "level_easy": 9,
-      "totalNote_easy": 198,
-      "level_normal": 14,
-      "totalNote_normal": 394,
-      "level_hard": 19,
-      "totalNote_hard": 568,
-      "level_expert": 28,
-      "totalNote_expert": 808,
-      "level_master": 32,
-      "totalNote_master": 1060
-    }
-  }
-}'
-```
-
-```
 {
-  "ok": true
+  "ok": false
 }
 ```
