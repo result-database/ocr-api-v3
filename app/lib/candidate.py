@@ -3,6 +3,9 @@ from lib.util import sort_for_difficult
 import time
 
 def candidateDifficult(target):
+    # timer start
+    start = time.time()
+
     difficults = ['EASY', 'NORMAL', 'HARD', 'EXPERT', 'MASTER']
     datas = []
 
@@ -12,7 +15,18 @@ def candidateDifficult(target):
 
     datas = sort_for_difficult(datas)
 
-    return datas
+    # get time of get-musics-from-db
+    time_process = time.time() - start
+    start = time.time()
+
+    result = {
+        "time": {
+            "process": time_process
+        },
+        "result": datas
+    }
+
+    return result
 
 def candidateTitle(target, ratio, db, models):
     # timer start
@@ -33,7 +47,7 @@ def candidateTitle(target, ratio, db, models):
             datas.append({'title': j[1], 'credibility': result, 'musicId': j[0]})
 
     # get time of do-preprocessing
-    time_preprocess = time.time() - start
+    time_process = time.time() - start
     start = time.time()
 
     datas = sort_for_difficult(datas)
@@ -46,7 +60,7 @@ def candidateTitle(target, ratio, db, models):
         "ratio": ratio,
         "time": {
             "database": time_query,
-            "preprocess": time_preprocess,
+            "process": time_process,
             "sort": time_sort
         },
         "result": datas

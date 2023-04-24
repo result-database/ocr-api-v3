@@ -52,13 +52,15 @@ def ocr_v2(request: ReqType, db: Session = Depends(get_db)):
     
 
     title = getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle)
+    difficult = getDifficult(img.copy(), request.psmDifficult, request.blurDifficult)
 
     return {
         'score': getScore(img.copy(), request.psmScore, request.blurScore), 
-        'difficult': getDifficult(img.copy(), request.psmDifficult, request.blurDifficult), 
+        'difficult': difficult, 
         'title': title, 
         'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge),
-        'candidateTitle': candidateTitle(title["result"], request.candidateRatio, db, models)
+        'candidateTitle': candidateTitle(title["result"], request.candidateRatio, db, models),
+        'candidateDifficult': candidateDifficult(difficult["result"])
     }
 
 @app.get("/music")
