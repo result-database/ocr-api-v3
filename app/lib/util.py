@@ -8,14 +8,6 @@ import math
 def has_duplicates(seq):
     return len(seq) != len(set(seq))
 
-def is_float(s):
-    try:
-        float(s)
-    except ValueError:
-        return False
-    else:
-        return True
-
 def openImg(url):
     pil_img = Image.open(io.BytesIO(requests.get(url).content))
     return np.array(pil_img)
