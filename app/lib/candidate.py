@@ -15,7 +15,7 @@ def candidateDifficult(target):
 
     return datas
 
-def candidateTitle(target, ratio):
+def candidateTitle(target, ratio, music_db):
     # validate border
     # arrow number (else, using 0.5)
     if is_float(ratio):
@@ -23,14 +23,13 @@ def candidateTitle(target, ratio):
     else:
         ratio = 0.5
 
-    with open('/app/lib/music.json', encoding='utf-8') as f1:
-        music = json.load(f1)
-        datas = []
+    music = music_db
+    datas = []
 
-        for j in music:
-            result = difflib.SequenceMatcher(None, target, j['title']).ratio()
+    for j in music:
+        result = difflib.SequenceMatcher(None, target, j[1]).ratio()
 
-            if result > ratio:
-                datas.append({'title': j['title'], 'credibility': result, 'musicId': j['id']})
+        if result > ratio:
+            datas.append({'title': j[1], 'credibility': result, 'musicId': j[0]})
 
-        return sort_for_difficult(datas)
+    return sort_for_difficult(datas)

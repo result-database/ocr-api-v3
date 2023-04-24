@@ -156,5 +156,6 @@ def candidate_difficult(data):
     return {'candidate': candidateDifficult(data)}
 
 @app.get('/candidate/title')
-def candidate_title(data, ratio):
-    return {'candidate': candidateTitle(data, ratio)}
+def candidate_title(data, ratio, db: Session = Depends(get_db)):
+    music_db = db.query(models.Music.id, models.Music.title).all()
+    return {'candidate': candidateTitle(data, ratio, music_db)}
