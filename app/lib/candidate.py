@@ -41,7 +41,7 @@ def candidateTitle(target, ratio, db, models):
     datas = []
 
     for j in music_db:
-        result = difflib.SequenceMatcher(None, target, j[1]).ratio()
+        result = difflib.SequenceMatcher(None, target, j[1].replace(" ", "")).ratio()
 
         if result > ratio:
             datas.append({'title': j[1], 'credibility': result, 'musicId': j[0]})
