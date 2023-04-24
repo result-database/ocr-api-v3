@@ -1,5 +1,12 @@
 # ocr-api
 
+## ToDo
+
+- URL周り
+  - `ocr/v2`の`default-url`
+  - `web-ui`の`axios-url`
+  - `api`の`database-uri`
+
 ## How to use (主にDB周り)
 
 - `static/index.html`を見てremoteをapplyするか決める
