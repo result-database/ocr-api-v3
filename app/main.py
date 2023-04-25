@@ -32,6 +32,7 @@ class ReqType(BaseModel):
     blurTitle: bool = Field(default=True)
     blurJudge: bool = Field(default=True)
     candidateRatio: float = Field(default=0.3)
+    candidate: bool = Field(default=True)
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -50,18 +51,19 @@ def ocr_v2(request: ReqType, db: Session = Depends(get_db)):
     # urlじゃなくてnd-arrayを送りつける
     img = openImg(request.url)
     
-
-    title = getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle)
-    difficult = getDifficult(img.copy(), request.psmDifficult, request.blurDifficult)
-
-    return {
+    common = {
         'score': getScore(img.copy(), request.psmScore, request.blurScore), 
-        'difficult': difficult, 
-        'title': title, 
-        'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge),
-        'candidateTitle': candidateTitle(title["result"], request.candidateRatio, db, models),
-        'candidateDifficult': candidateDifficult(difficult["result"])
+        'difficult': getDifficult(img.copy(), request.psmDifficult, request.blurDifficult), 
+        'title': getTitle(img.copy(), request.psmTitle, request.blurTitle, request.borderTitle), 
+        'judge': getJudge(img.copy(), request.psmJudge, request.blurJudge, request.borderJudge)
     }
+
+    candidate = {
+        'candidateTitle': candidateTitle(common["title"]["result"], request.candidateRatio, db, models),
+        'candidateDifficult': candidateDifficult(common["difficult"]["result"])
+    }
+
+    return {**common, **candidate} if request.candidate else common
 
 @app.get("/music")
 def get_music(db: Session = Depends(get_db)):
