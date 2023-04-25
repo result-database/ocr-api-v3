@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
+from reqtypes import ReqType, ReqType2
 
 import models
 from db import engine, get_db
@@ -9,16 +10,10 @@ from lib.score import getScore
 from lib.difficult import getDifficult
 from lib.title import getTitle
 from lib.judge import getJudge
-
-from lib.util import openImg, load_diff
-
-from lib.candidate import candidateDifficult
-from lib.candidate import candidateTitle
-
-import requests
-import json
-
-from reqtypes import ReqType, ReqType2
+from lib.util import openImg
+from lib.candidate import candidateDifficult, candidateTitle
+from lib.db_apply import apply
+from lib.getdata import getFromOrigin, getFromDB
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -46,70 +41,12 @@ def ocr_v2(request: ReqType, db: Session = Depends(get_db)):
 
 @app.get("/music")
 def get_music(db: Session = Depends(get_db)):
-    music_db = db.query(models.Music).all()
-    tmp = {}
-    for m in music_db:
-        tmp[m.id] = m
-    return { "data": tmp }
+    return getFromDB(db=db, models=models)
 
 @app.get("/get")
 def get_new_data():
-    # httpから取得
-    music = json.loads(requests.get("https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/musics.json").text)
-    difficult = json.loads(requests.get('https://raw.githubusercontent.com/Sekai-World/sekai-master-db-diff/main/musicDifficulties.json').text)
-    if load_diff(music=music, difficult=difficult):
-        return { 'ok': False }
-
-    try:
-        # データの結合
-        result = {}
-        for m in music:
-            tmp = {
-                "id": m["id"],
-                "title": m["title"],
-                "pronunciation": m["pronunciation"],
-                "creator": m["creator"],
-                "lyricist": m["lyricist"],
-                "composer": m["composer"],
-                "arranger": m["arranger"]
-            }       
-
-            for d in difficult:
-                if d["musicId"] == m["id"]:
-                    tmp["level_" + d["musicDifficulty"]] = d["playLevel"]
-                    tmp["totalNote_" + d["musicDifficulty"]] = d["totalNoteCount"]
-            result[tmp["id"]] = tmp
-    except:
-        return { "ok": False }
-
-    return { "ok": True, "data": result }
+    return getFromOrigin()
 
 @app.post("/apply")
 def apply_patch(request: ReqType2, db: Session = Depends(get_db)):
-    db.query(models.Music).delete()
-    db.commit()
-
-    for id in request.data.keys():
-        data = request.data[id]
-        item = models.Music(
-            id = data.id,
-            title = data.title,
-            pronunciation = data.pronunciation,
-            creator = data.creator,
-            lyricist = data.lyricist,
-            composer = data.composer,
-            arranger = data.arranger,
-            level_easy = data.level_easy,
-            level_normal = data.level_normal,
-            level_hard = data.level_hard,
-            level_expert = data.level_expert,
-            level_master = data.level_master,
-            totalNote_easy = data.totalNote_easy,
-            totalNote_normal = data.totalNote_normal,
-            totalNote_hard = data.totalNote_hard,
-            totalNote_expert = data.totalNote_expert,
-            totalNote_master = data.totalNote_master
-        )
-        db.add(item)
-    db.commit()
-    return { "ok": True }
+    return apply(models=models, db=db, request=request)
