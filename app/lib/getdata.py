@@ -1,6 +1,6 @@
 import json
 import requests
-from util import load_diff
+from lib.util import load_diff
 
 def getFromOrigin():
     # httpから取得
