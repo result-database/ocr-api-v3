@@ -7,3 +7,10 @@ engine=create_engine('postgresql://postgres:postgres@db:5432/ocr-api',echo=True)
 Base = declarative_base()
 
 SessionLocal = sessionmaker(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
