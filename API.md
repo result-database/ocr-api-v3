@@ -19,7 +19,8 @@ curl -X 'POST' \
   "blurDifficult": true,
   "blurTitle": true,
   "blurJudge": true,
-  "candidateRatio": 0.3
+  "candidateRatio": 0.3,
+  "candidate": true
 }'
 ```
 
@@ -138,17 +139,19 @@ curl -X 'GET' \
   "data": {
     "1": {
       "id": 1,
-      "creator": "livetune"....
+      "creator": "livetune"
+      ....
     },
     "2": {
       "id": 2,
-      "creator": "みきとP"....
+      "creator": "みきとP"
+      ....
     }
   }
 }
 ```
 
-## From `static`
+## From `github.com`
 
 ```
 curl -X 'GET' \
@@ -182,22 +185,40 @@ curl -X 'GET' \
 }
 ```
 
-## Set `default_data`
+## Apply data
 
 ```
-curl -X 'GET' \
-  'http://localhost:8080/set-online' \
-  -H 'accept: application/json'
+curl -X 'POST' \
+  'http://localhost:8080/apply' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "additionalProp1": {
+      "id": 0,
+      "title": "string",
+      "pronunciation": "string",
+      "creator": "string",
+      "lyricist": "string",
+      "composer": "string",
+      "arranger": "string",
+      "level_easy": 0,
+      "level_normal": 0,
+      "level_hard": 0,
+      "level_expert": 0,
+      "level_master": 0,
+      "totalNote_easy": 0,
+      "totalNote_normal": 0,
+      "totalNote_hard": 0,
+      "totalNote_expert": 0,
+      "totalNote_master": 0
+    }
+  }
+}'
 ```
 
 ```
 {
   "ok": true
-}
-
----
-
-{
-  "ok": false
 }
 ```

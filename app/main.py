@@ -40,11 +40,11 @@ def ocr_v2(request: ReqType, db: Session = Depends(get_db)):
     return {**common, **candidate} if request.candidate else common
 
 @app.get("/music")
-def get_music(db: Session = Depends(get_db)):
+def get_from_db(db: Session = Depends(get_db)):
     return getFromDB(db=db, models=models)
 
 @app.get("/get")
-def get_new_data():
+def get_from_origin():
     return getFromOrigin()
 
 @app.post("/apply")
