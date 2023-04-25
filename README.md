@@ -10,8 +10,11 @@
 ## How to use (主にDB周り)
 
 - `static/index.html`を見てremoteをapplyするか決める
-  - `set-online`する
-  - `DB`を直接いじる(`static/index.html`を見ながら)
+  - applyする
+    - `set-online`する
+    - `DB`を直接いじる(`static/index.html`をちょこちょこ見ながら)
+  - applyしない
+    - ほっとく
 
 ## テストデータのメモ
 
