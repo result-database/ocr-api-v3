@@ -1,5 +1,11 @@
 # ocr-api
 
+## 決めたこと
+
+- `s3`とか`github`とかに`music.json`を作って、それを参照させる
+    - musicDBは手動で更新する
+    - DBを使わないようにする
+
 ## ToDo
 
 - URL周り
