@@ -8,8 +8,7 @@
 
 - URL周り
   - `ocr/v2`の`default-url`
-  - `web-ui`の`axios-url`
-  - `api`の`database-uri`
+  - `music.json`
 
 
 ## Memo
