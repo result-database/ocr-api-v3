@@ -3,8 +3,6 @@
 ## 決めたこと
 
 - `s3`とか`github`とかに`music.json`を作って、それを参照させる
-    - musicDBは手動で更新する
-    - DBを使わないようにする
 
 ## ToDo
 
@@ -13,30 +11,8 @@
   - `web-ui`の`axios-url`
   - `api`の`database-uri`
 
-## How to use (主にDB周り)
-
-- `static/index.html`を見てremoteをapplyするか決める
-  - applyする
-    - `set-online`する
-    - `DB`を直接いじる(`static/index.html`をちょこちょこ見ながら)
-  - applyしない
-    - ほっとく
-
-## テストデータのメモ
-
-- id1(`Tell Your World`)の読み
-  - `てるゆあわーるど` → `てるゆあわーるどっどどどどど`
-- id2
-  - `ロキ`が削除
-- id6
-  - `ヒバナ -Reloaded-`が追加
 
 ## Memo
-
-- `set-online`は何が何でも保護しなければならない
-- ほかはオープンでOK
-
----
 
 ```python
 img = cv2.imread('./img.png')
