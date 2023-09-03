@@ -1,6 +1,8 @@
 import difflib
 from lib.util import sort_for_difficult
 import time
+import json
+import requests
 
 def candidateDifficult(target):
     # timer start
@@ -28,11 +30,11 @@ def candidateDifficult(target):
 
     return result
 
-def candidateTitle(target, ratio, db, models):
+def candidateTitle(target, ratio):
     # timer start
     start = time.time()
 
-    music_db = db.query(models.Music.id, models.Music.title).all()
+    music = json.loads(requests.get("http://localhost:8080/static/music.json").text)
 
     # get time of get-musics-from-db
     time_query = time.time() - start
@@ -40,11 +42,11 @@ def candidateTitle(target, ratio, db, models):
 
     datas = []
 
-    for j in music_db:
-        result = difflib.SequenceMatcher(None, target, j[1].replace(" ", "")).ratio()
+    for j in music:
+        result = difflib.SequenceMatcher(None, target, j["title"].replace(" ", "")).ratio()
 
         if result > ratio:
-            datas.append({'title': j[1], 'credibility': result, 'musicId': j[0]})
+            datas.append({'title': j['title'], 'credibility': result, 'musicId': j['id']})
 
     # get time of do-preprocessing
     time_process = time.time() - start
