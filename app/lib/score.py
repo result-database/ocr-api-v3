@@ -14,25 +14,27 @@ def getScore(img, psm, blur):
 
     # crop img
     # left:0 top:1/6 right:1/2 bottom:1/2
-    img = img[img.shape[0] // 6 : img.shape[0] // 2, 0 : img.shape[1] // 2]
+    img = img[img.shape[0] // 6 : img.shape[0] // 2, 0 : img.shape[1] // 3 * 2]
 
     # get time of do-preprocessing
     time_preprocess = time.time() - start
     start = time.time()
 
-    # to grayscale
     r = img[:, :, 0]
     g = img[:, :, 1]
     b = img[:, :, 2]
-    mask = np.logical_and(225 <= r, np.logical_and(r <= 255, np.logical_and(55 <= g, np.logical_and(g <= 115, np.logical_and(140 <= b, b <= 200)))))
+    border = 20
+    mask = np.logical_and.reduce((r >= 255 - border, r <= 255 + border, 
+                                g >= 119 - border, g <= 119 + border, 
+                                b >= 170 - border, b <= 170 + border))
+    img2 = img.copy()
+    img2[mask] = [0, 0, 0]
+    img2[np.logical_not(mask)] = [255, 255, 255]
 
-    # 一括で更新
-    img[mask] = [0, 0, 0]
-    img[np.logical_not(mask)] = [255, 255, 255]
 
     # 余白作成とblur
     if blur:
-        img = cv2.blur(img, (3, 3))
+        img2 = cv2.blur(img2, (3, 3))
     img = cv2.copyMakeBorder(img, 50, 50, 50, 50, cv2.BORDER_CONSTANT, value=[255,255,255])  
 
     # get time of do-grayscale
@@ -43,7 +45,7 @@ def getScore(img, psm, blur):
     builder = pyocr.builders.DigitBuilder(tesseract_layout=psm)
 
     # do OCR
-    result = tool.image_to_string(Image.fromarray(img), lang="eng", builder=builder)
+    result = tool.image_to_string(Image.fromarray(img2), lang="eng", builder=builder)
 
     # get time of do-ocr
     time_ocr = time.time() - start
