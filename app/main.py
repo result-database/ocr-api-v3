@@ -25,8 +25,8 @@ def ocr_v3(request: ReqType):
     }
 
     candidate = {
-        # 'candidateTitle': candidateTitle(common["title"]["result"], request.candidateRatio),
-        # 'candidateDifficult': candidateDifficult(common["difficult"]["result"])
+        'candidateTitle': candidateTitle(common["title"]["result"], request.candidateRatio),
+        'candidateDifficult': candidateDifficult(common["difficult"]["result"])
     }
 
     return {**common, **candidate} if request.candidate else common

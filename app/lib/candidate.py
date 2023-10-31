@@ -8,7 +8,7 @@ def candidateDifficult(target):
     # timer start
     start = time.time()
 
-    difficults = ['EASY', 'NORMAL', 'HARD', 'EXPERT', 'MASTER']
+    difficults = ['EASY', 'NORMAL', 'HARD', 'EXPERT', 'MASTER', 'APPEND']
     datas = []
 
     for j in difficults:
