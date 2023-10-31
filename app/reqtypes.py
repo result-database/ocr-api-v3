@@ -34,6 +34,3 @@ class ReqType(BaseModel):
     blurJudge: bool = Field(default=True)
     candidateRatio: float = Field(default=0.3)
     candidate: bool = Field(default=True)
-
-class ReqType2(BaseModel):
-    data: Dict[str, Music]
