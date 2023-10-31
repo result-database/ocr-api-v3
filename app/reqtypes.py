@@ -21,7 +21,7 @@ class Music(BaseModel):
     totalNote_master: int
 
 class ReqType(BaseModel):
-    url: str = Field(default="http://localhost:8080/static/wide.png")
+    url: str = Field(default="http://localhost:8080/static/IMG_8955.png")
     psmScore: int = Field(default=6, enum=[6, 7])
     psmDifficult: int = Field(default=7, enum=[6, 7])
     psmTitle: int = Field(default=11, enum=[6, 7, 11])
