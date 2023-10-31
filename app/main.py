@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from reqtypes import ReqType, ReqType2
+from reqtypes import ReqType
 
 from lib.score import getScore
 from lib.difficult import getDifficult
