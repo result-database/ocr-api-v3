@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from reqtypes import ReqType
+from starlette.middleware.cors import CORSMiddleware
 
 from lib.score import getScore
 from lib.difficult import getDifficult
@@ -11,6 +12,14 @@ from lib.candidate import candidateDifficult, candidateTitle
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,   # 追記により追加
+    allow_methods=["*"],      # 追記により追加
+    allow_headers=["*"]       # 追記により追加
+)
 
 @app.post('/ocr/v3')
 def ocr_v3(request: ReqType):
